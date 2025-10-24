@@ -1,0 +1,26 @@
+\section{Special cases of defective $M(s)$}\label{app:defective}
+
+We cannot guarantee that $M$ will be diagonalizable, but the Jordan normal form can always be used to obtain invertible $V_J$ such that $M=VJV^{-1}$ for a nearly diagonal Jordan matrix $J$. Each Jordan block can be labelled upstream- or downstream-going using Briggs' criterion to obtain
+\begin{equation}
+    M
+    =
+    \begin{bmatrix}
+        V_{J,+} & V_{J,-}
+    \end{bmatrix}
+    \begin{bmatrix}
+        J_{++} & 0\\
+        0 & J_{--}
+    \end{bmatrix}
+    \begin{bmatrix}
+        V_{J,+} & V_{J,-}
+    \end{bmatrix}^{-1},
+\end{equation}
+for the nearly-diagonal Jordan matrices, $J$, $J_{++}$, and $J_{--}$. Then
+\[
+(M-i\beta I)\hat{\bm{\phi}}
+=
+(V_JJV_J^{-1}-i\beta V_JV_J^{-1})V_J\bm{\psi}
+=
+V_J(J-i\beta I)\bm{\psi},
+\]
+where $V_J$ has full rank while $(J-i\beta I)$ comprises nearly-diagonal Jordan blocks. Each Jordan block can be considered separately, as discussed by Towne and Colonius~\cite{Towne_2015_OWNS-O}.

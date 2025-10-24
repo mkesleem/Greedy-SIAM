@@ -1,0 +1,57 @@
+\section{Special cases of singular $A$}\label{app:singular}
+
+If $A$ is singular, then we obtain
+\begin{equation}
+    \tilde{A}=\begin{bmatrix}
+        A_{++} & 0      & 0\\
+        0      & A_{--} & 0\\
+        0      & 0      & A_{00}
+    \end{bmatrix}
+\end{equation}
+for diagonal $A_{++}\in\mathbb{R}^{N_+\times N_+}$ with $A_{++}>0$, $A_{--}\in\mathbb{R}^{N_-\times N_-}$ with $A_{--}<0$, and $A_{00}\in\mathbb{R}^{N_0\times N_0}$ with $A_{00}=0$, where $N_++N_-+N_0=N$. Then we define
+\begin{subequations}
+\begin{equation}
+\tilde{A}_{\pm\pm}=\begin{bmatrix}
+    A_{++} & 0     \\
+    0      & A_{--}
+\end{bmatrix}
+\end{equation}
+and
+\begin{align}
+\begin{split}
+\tilde{L}(s)
+&=\begin{bmatrix}
+    L_{\pm\pm} & L_{\pm0}\\
+    L_{0\pm}   & L_{00}
+\end{bmatrix}\\
+&=\begin{bmatrix}
+    s I_{\pm\pm}+\sum_{j=2}^d i\omega_j\tilde{B}_{j,\pm\pm}+\tilde{C}_{\pm\pm} &
+    \sum_{j=2}^d i\omega_j\tilde{B}_{j,\pm0}+\tilde{C}_{\pm0}\\
+    \sum_{j=2}^d i\omega_j\tilde{B}_{j,0\pm}+\tilde{C}_{0\pm} &
+    s I_{00} + \sum_{j=2}^d i\omega_j\tilde{B}_{j,00}+\tilde{C}_{00}
+\end{bmatrix},
+\end{split}
+\end{align}
+\end{subequations}
+so that
+\begin{subequations}
+    \begin{align}
+        \tilde{A}_{\pm\pm}\frac{d\hat{\bm{\phi}}_{\pm}}{d x}
+        &=L_{\pm\pm}\hat{\bm{\phi}}_{\pm}+L_{\pm0}\hat{\bm{\phi}}_0+\hat{\bm{f}}_{\phi,\pm}\\
+        0
+        &=L_{0\pm}\hat{\bm{\phi}}_{\pm}+L_{00}\hat{\bm{\phi}}_0+\hat{\bm{f}}_{\phi,0}.
+    \end{align}
+\end{subequations}
+The zero eigenvalues, $\tilde{A}_{00}$, correspond to points in the base flow where the streamwise velocity is exactly zero or sonic. In practice, unless a grid point is placed exactly on the sonic line, we will have $\tilde{A}_{00}$ associated with wall boundary-conditions only, so that $L_{00}$ will be invertible and we can eliminate $\hat{\bm{\phi}}_0$ as
+\begin{equation}
+    \hat{\bm{\phi}}_0=-L_{00}^{-1}(L_{0\pm}\hat{\bm{\phi}}_{\pm}+\hat{\bm{f}}_{\phi,0}).
+\end{equation}
+We then define
+\begin{equation}
+    M=\tilde{A}_{\pm\pm}^{-1}(L_{\pm\pm}-L_{\pm0}L_{00}^{-1}L_{0\pm}),\quad \hat{\bm{g}}=\tilde{A}_{\pm\pm}^{-1}(\hat{\bm{f}}_{\phi,\pm}-L_{\pm0}L_{00}^{-1}\hat{\bm{f}}_{\phi,0}),
+    \end{equation}
+to obtain the ODE
+\begin{equation}
+    \frac{d\hat{\bm{\phi}}}{d x}=M\hat{\bm{\phi}}_{\pm}+\hat{\bm{g}},
+\end{equation}
+which can be treated as in the non-singular case.

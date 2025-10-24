@@ -1,0 +1,85 @@
+\contentsline {definition}{{Definition}{2.1}{Briggs' criterion~\cite {Briggs_1964_Electron}}}{4}{theorem.18}%
+\contentsline {proposition}{{Proposition}{2.2}{}}{4}{theorem.19}%
+\contentsline {proof}{{Proof}{1}{}}{4}{proof.20}%
+\contentsline {definition}{{Definition}{2.3}{}}{5}{theorem.23}%
+\contentsline {proposition}{{Proposition}{2.4}{}}{5}{theorem.28}%
+\contentsline {proof}{{Proof}{2}{}}{5}{proof.29}%
+\contentsline {proposition}{{Proposition}{2.5}{}}{5}{theorem.30}%
+\contentsline {proof}{{Proof}{3}{}}{5}{proof.31}%
+\contentsline {definition}{{Definition}{2.6}{exact one-way projection equations~\cite {Towne_2022_OWNS-P}}}{5}{theorem.32}%
+\contentsline {proposition}{{Proposition}{2.7}{}}{6}{theorem.39}%
+\contentsline {proof}{{Proof}{4}{}}{6}{proof.40}%
+\contentsline {proposition}{{Proposition}{2.8}{}}{6}{theorem.41}%
+\contentsline {proof}{{Proof}{5}{Proof of Proposition~\ref {prop:projection-consistent}}}{6}{proof.42}%
+\contentsline {remark}{{Remark}{2.9}{}}{6}{theorem.43}%
+\contentsline {definition}{{Definition}{2.10}{OWNS-P filter}}{6}{theorem.45}%
+\contentsline {proposition}{{Proposition}{2.11}{}}{6}{theorem.52}%
+\contentsline {proof}{{Proof}{6}{}}{7}{proof.57}%
+\contentsline {proposition}{{Proposition}{2.12}{}}{7}{theorem.58}%
+\contentsline {proof}{{Proof}{7}{}}{7}{proof.59}%
+\contentsline {proposition}{{Proposition}{2.13}{}}{7}{theorem.60}%
+\contentsline {proof}{{Proof}{8}{}}{7}{proof.62}%
+\contentsline {proposition}{{Proposition}{2.14}{OWNS-P minimal set of convergent recursion parameters}}{7}{theorem.63}%
+\contentsline {proof}{{Proof}{9}{}}{7}{proof.66}%
+\contentsline {proposition}{{Proposition}{2.15}{}}{7}{theorem.67}%
+\contentsline {proof}{{Proof}{10}{}}{7}{proof.71}%
+\contentsline {proposition}{{Proposition}{2.16}{}}{8}{theorem.72}%
+\contentsline {proof}{{Proof}{11}{}}{8}{proof.73}%
+\contentsline {remark}{{Remark}{2.17}{}}{8}{theorem.74}%
+\contentsline {proposition}{{Proposition}{2.18}{}}{8}{theorem.75}%
+\contentsline {proof}{{Proof}{12}{}}{8}{proof.76}%
+\contentsline {remark}{{Remark}{2.19}{}}{8}{theorem.77}%
+\contentsline {proposition}{{Proposition}{2.20}{}}{8}{theorem.78}%
+\contentsline {proof}{{Proof}{13}{}}{8}{proof.80}%
+\contentsline {remark}{{Remark}{2.21}{}}{8}{theorem.81}%
+\contentsline {definition}{{Definition}{2.22}{OWNS-R filter}}{8}{theorem.83}%
+\contentsline {proposition}{{Proposition}{2.23}{}}{9}{theorem.88}%
+\contentsline {proof}{{Proof}{14}{}}{9}{proof.91}%
+\contentsline {remark}{{Remark}{2.24}{}}{9}{theorem.92}%
+\contentsline {proposition}{{Proposition}{2.25}{}}{9}{theorem.93}%
+\contentsline {proof}{{Proof}{15}{}}{9}{proof.94}%
+\contentsline {proposition}{{Proposition}{2.26}{}}{9}{theorem.95}%
+\contentsline {proof}{{Proof}{16}{}}{9}{proof.96}%
+\contentsline {remark}{{Remark}{2.27}{}}{9}{theorem.97}%
+\contentsline {proposition}{{Proposition}{2.28}{}}{9}{theorem.98}%
+\contentsline {proof}{{Proof}{17}{}}{9}{proof.99}%
+\contentsline {proposition}{{Proposition}{2.29}{OWNS-R minimal set of convergent recursion parameters}}{9}{theorem.100}%
+\contentsline {proof}{{Proof}{18}{}}{10}{proof.104}%
+\contentsline {proposition}{{Proposition}{2.30}{}}{10}{theorem.105}%
+\contentsline {proof}{{Proof}{19}{}}{10}{proof.106}%
+\contentsline {proposition}{{Proposition}{2.31}{}}{10}{theorem.107}%
+\contentsline {proof}{{Proof}{20}{}}{10}{proof.108}%
+\contentsline {remark}{{Remark}{2.32}{}}{10}{theorem.109}%
+\contentsline {proposition}{{Proposition}{2.33}{}}{10}{theorem.110}%
+\contentsline {proof}{{Proof}{21}{}}{10}{proof.112}%
+\contentsline {proposition}{{Proposition}{2.34}{}}{10}{theorem.113}%
+\contentsline {proof}{{Proof}{22}{}}{10}{proof.114}%
+\contentsline {remark}{{Remark}{2.35}{}}{10}{theorem.115}%
+\contentsline {remark}{{Remark}{2.36}{}}{10}{theorem.116}%
+\contentsline {proposition}{{Proposition}{2.37}{}}{10}{theorem.117}%
+\contentsline {proof}{{Proof}{23}{}}{10}{proof.118}%
+\contentsline {remark}{{Remark}{2.38}{}}{10}{theorem.119}%
+\contentsline {remark}{{Remark}{2.39}{}}{11}{theorem.120}%
+\contentsline {remark}{{Remark}{2.40}{}}{11}{theorem.121}%
+\contentsline {remark}{{Remark}{3.1}{}}{12}{theorem.132}%
+\contentsline {remark}{{Remark}{3.2}{}}{12}{theorem.133}%
+\contentsline {remark}{{Remark}{3.3}{}}{14}{theorem.164}%
+\contentsline {remark}{{Remark}{5.1}{}}{16}{theorem.190}%
+\contentsline {remark}{{Remark}{5.2}{}}{17}{theorem.194}%
+\contentsline {remark}{{Remark}{5.3}{}}{17}{theorem.195}%
+\contentsline {proof}{{Proof}{24}{Proof of Proposition~\ref {prop:proj}}}{21}{proof.208}%
+\contentsline {proof}{{Proof}{25}{Proof of Proposition~\ref {prop:approxProjectConvergence}}}{23}{proof.217}%
+\contentsline {proof}{{Proof}{26}{Proof of Proposition~\ref {prop:minimalOWNS-P}}}{23}{proof.218}%
+\contentsline {theorem}{{Theorem}{A.1}{Block matrix inverse}}{23}{theorem.219}%
+\contentsline {theorem}{{Theorem}{A.2}{Neumann series}}{24}{theorem.227}%
+\contentsline {proof}{{Proof}{27}{Proof of Proposition~\ref {prop:errOWNSP}}}{24}{proof.229}%
+\contentsline {proof}{{Proof}{28}{Proof of Proposition~\ref {prop:errCommP}}}{26}{proof.230}%
+\contentsline {proof}{{Proof}{29}{Proof of Proposition~\ref {prop:greedy-p}}}{26}{proof.231}%
+\contentsline {proof}{{Proof}{30}{Proof or Proposition~\ref {prop:owns-r-implementation}}}{26}{proof.233}%
+\contentsline {proof}{{Proof}{31}{Proof of Proposition~\ref {prop:projMatOWNS-R}}}{27}{proof.234}%
+\contentsline {proof}{{Proof}{32}{Proof of Proposition~\ref {prop:minimalOWNS-R}}}{27}{proof.235}%
+\contentsline {proof}{{Proof}{33}{Proof of Proposition~\ref {prop:minimalOWNS-R-false}}}{27}{proof.236}%
+\contentsline {proof}{{Proof}{34}{Proof of Proposition~\ref {prop:minimalOWNS-R-true}}}{28}{proof.237}%
+\contentsline {proof}{{Proof}{35}{Proof of Proposition~\ref {prop:errOWNSR}}}{28}{proof.238}%
+\contentsline {proof}{{Proof}{36}{Proof of Proposition~\ref {prop:greedy-r}}}{29}{proof.239}%
+\contentsline {proof}{{Proof}{37}{Proof of Proposition~\ref {prop:owns-r-repeat-blowup}}}{29}{proof.240}%
