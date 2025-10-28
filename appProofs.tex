@@ -1,531 +1,85 @@
 \section{Proofs}~\label{app:Proofs}
 
-
-\subsection{Proofs for OWNS-P}\label{app:Proofs-P}
-
-\begin{proof}[Proof of Proposition~\ref{prop:proj}]
-    First note that~\eqref{eq:filterTop} through ~\eqref{eq:filterBottom} can be diagonalized using
+\begin{proof}[Proof of proposition~\ref{prop:errBoundTriangle}]
+    $R_{N_\beta}$ comprises four blocks, where the diagonal blocks are square and the off-diagonal block are conformal with them for partitioning. Recall from~\eqref{eq:approxProjectRMat} that $R_{N_\beta}$ is defined as the inverse of another matrix, so that obtaining a simplified expression for $R_{N_\beta}^{-1}$ is straightforward, while it is more challenging for $R_{N_\beta}$. Define $S=R_{N_\beta}^{-1}$, so that it can be inverted blockwise as
     \[
-    (M-i\beta I)\hat{\bm{\phi}}
-    =(VDV^{-1}-i\beta VV^{-1})V\bm{\psi}
-    =V(D-i\beta I)\bm{\psi},
-    \]
-    where $V$ has full rank while $(D-i\beta I)$ is diagonal so that each scalar component of $\{\bm{\psi}^{j}\}_{j=-N_\beta}^{N_\beta}$ and $\bm{\psi}$ can be treated separately as
-    \begin{align*}
-        (\alpha_k-\beta_-^j)\psi_{k}^{-j}-(\alpha_k-\beta_+^j)\psi_{k}^{-j-1}&=0,\quad j=1,\dots,N_\beta-1,\\
-        (\alpha_k-\beta_-^0)\psi_{k}^{0}-(\alpha_k-\beta_+^0)\psi_{k}^{-1}&=(\alpha_k-\beta_-^0)\psi_k,\\
-        (\alpha_k-\beta_+^j)\psi_{k}^{j}-(\alpha_k-\beta_-^j)\psi_{k}^{j+1}&=0,\quad j=0,\dots,N_\beta-1,
-    \end{align*}
-    for $k=1,\dots,N$. For the downstream-going modes we obtain
-    \begin{subequations}
-    \begin{align}
-        \psi_k^{0}-\psi_k&=\prod_{j=0}^{N_\beta-1}\frac{\alpha_k - \beta_+^j}{\alpha_k- \beta_-^{j}}\psi_k^{-N_\beta} = F_k\psi_k^{-N_\beta},\label{eq:owns-p-filter-downstream}\\
-        \psi_k^{ N_\beta}&=\prod_{j=0}^{N_\beta-1}\frac{\alpha_k - \beta_+^j}{\alpha_k- \beta_-^{j}}\psi_k^0          = F_k\psi_k^{0}       ,
-    \end{align}
-    so that
-    \begin{equation}
-    F_{++}\bm{\psi}_+^{-N_\beta} = \bm{\psi}_+^{0}-\bm{\psi}_+,\quad
-    F_{++}\bm{\psi}_+^{0}        = \bm{\psi}_+^{N_\beta},
-    \end{equation}
-    \end{subequations}
-    for $k=1,\dots,N_+$. Similarly, for the upstream-going modes we obtain
-    \begin{subequations}
-    \begin{align}
-        \psi_k^0         &=\prod_{j=0}^{N_\beta-1}\frac{\alpha_k - \beta_-^j}{\alpha_k- \beta_+^{j}}\psi_k^{ N_\beta}   = F_k^{-1}\psi_k^{ N_\beta}  ,\label{eq:owns-p-filter-upstream}\\
-        \psi_k^{-N_\beta}&=\prod_{j=0}^{N_\beta-1}\frac{\alpha_k - \beta_-^j}{\alpha_k- \beta_+^{j}}(\psi_k^{0}-\psi_k) = F_k^{-1}(\psi_k^{0}-\psi_k),
-    \end{align}
-    so that
-    \begin{equation}
-    F_{--}^{-1}\bm{\psi}_-^{ N_\beta}      = \bm{\psi}_-^{0},\quad
-    F_{--}^{-1}(\bm{\psi}_-^0-\bm{\psi}_-) = \bm{\psi}_-^{-N_\beta},
-    \end{equation}
-    \end{subequations}
-    for $k=N_++1,\dots,N$. Next recall that
-    \[
-    \begin{bmatrix}
-        \hat{\bm{\phi}}_+\\
-        \hat{\bm{\phi}}_-
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        V_{++} & V_{+-}\\
-        V_{-+} & V_{--}
-    \end{bmatrix}
-    \begin{bmatrix}
-        \bm{\psi}_+\\
-        \bm{\psi}_-
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        V_{++}\bm{\psi}_{+}+V_{+-}\bm{\psi}_{-}\\
-        V_{-+}\bm{\psi}_{+}+V_{--}\bm{\psi}_{-}
-    \end{bmatrix}
-    \]
-    so that~\eqref{eq:filterEndPlus} and~\eqref{eq:filterEndMinus} are equivalent to
-    \begin{align*}
-        \hat{\bm{\phi}}_+^{-N_\beta}&=V_{++}\bm{\psi}_{+}^{-N_\beta}+V_{+-}\bm{\psi}_{-}^{-N_\beta}=0,\\
-        \hat{\bm{\phi}}_-^{ N_\beta}&=V_{-+}\bm{\psi}_{+}^{ N_\beta}+V_{--}\bm{\psi}_{-}^{ N_\beta}=0.
-    \end{align*}
-    or
-    \[
-    \bm{\psi}_+^{-N_\beta}=-V_{++}^{-1}V_{+-}\bm{\psi}_-^{-N_\beta},\quad
-    \bm{\psi}_-^{ N_\beta}=-V_{--}^{-1}V_{-+}\bm{\psi}_+^{ N_\beta}.
-    \]
-    We pre-multiply by $F_{++}$ and $F_{--}^{-1}$ to obtain
-    \begin{align*}
-        \bm{\psi}_+^0-\bm{\psi}_+
-        &=F_{++}\bm{\psi}_+^{-N_\beta}
-        =-F_{++}V_{++}^{-1}V_{+-}\bm{\psi}_-^{-N_\beta}
-        =-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}(\bm{\psi}_-^{0}-\bm{\psi}_-),\\
-        \bm{\psi}_-^0
-        &=F_{--}^{-1}\bm{\psi}_-^{ N_\beta}
-        =-F_{--}^{-1}V_{--}^{-1}V_{-+}\bm{\psi}_+^{ N_\beta}
-        =-F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\bm{\psi}_+^0,
-    \end{align*}
-    and rearranging yields
-    \begin{align*}
-        \bm{\psi}_+^{0}+F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\bm{\psi}_-^0
-        &=\bm{\psi}_{+}+F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\bm{\psi}_-,\\
-        F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\bm{\psi}_+^0+\bm{\psi}_-^{0}&=0,
-    \end{align*}
-    which in matrix form becomes
-    \[
-    \begin{bmatrix}
-        I_{++}                             & F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\\
-        F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++} & I_{--}
-    \end{bmatrix}
-    \begin{bmatrix}
-        \bm{\psi}_+^0\\
-        \bm{\psi}_-^0\\
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        I_{++} & F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\\
-        0      & 0
-    \end{bmatrix}
-    \begin{bmatrix}
-        \bm{\psi}_+\\
-        \bm{\psi}_-\\
-    \end{bmatrix}.
-    \]
-    Using $R_{N_\beta}$ from~\eqref{eq:approxProjectRMat}, the above is equivalent to $R_{N_\beta}^{-1}\bm{\psi}^{0}=ER_{N_\beta}^{-1}\bm{\psi}$, so that $\hat{\bm{\phi}}^{0}=VR_{N_\beta}ER_{N_\beta}^{-1}V^{-1}\hat{\bm{\phi}} = P_{N_\beta}\hat{\bm{\phi}}_0$. Thus, we have shown that the action of the filter~\eqref{eq:filter-p} can be applied using the projection matrix~\eqref{eq:approxProject}.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:approxProjectConvergence}]
-    Clearly $P_{N_\beta}\to P$ if and only if $R_{N_\beta}^{-1}\to I$, while $F$ is diagonal so that
-    \begin{align*}
-    (F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1})_{mn}
-    &=
-    \prod_{j=0}^{N_\beta-1}\frac{\alpha_m-\beta_{+}^{j}}{\alpha_m-\beta_-^j}\frac{\alpha_n-\beta_{-}^{j}}{\alpha_n-\beta_+^j}
-    (V_{++}^{-1}V_{+-})_{mn},\\
-    (F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++})_{nm}
-    &=
-    \prod_{j=0}^{N_\beta-1}\frac{\alpha_m-\beta_{+}^{j}}{\alpha_m-\beta_-^j}\frac{\alpha_n-\beta_{-}^{j}}{\alpha_n-\beta_+^j}
-    (V_{++}^{-1}V_{+-})_{nm},
-    \end{align*}    
-    and $R_{N_\beta}^{-1}\to I$ if and only if~\eqref{eq:fConv} holds.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:minimalOWNS-P}]
-    First we show that if $\alpha_m\neq\alpha_n$ for all $m\in i^{(+)}$ and $n\in i^{(-)}$ then we can always choose recursion parameters such that the OWNS-P approximation converges. If $\tilde{N}_+\leq \tilde{N}_-$, then we choose recursion parameters as in~\eqref{eq:owns-p-params_plus}, which yields
-    \[
-    \prod_{j=0}^{\tilde{N}_+-1}\frac{|\alpha_m-\beta_{+}^{j}|}{|\alpha_m-\beta_-^j|}
-    \frac{|\alpha_n-\beta_{-}^{j}|}{|\alpha_n-\beta_+^j|}=0,\quad\forall m\in i^{(+)},n\in i^{(-)},
-    \]
-    where for all $m\in i^{(+)}$ there exists some $j\in \{1,\dots,\tilde{N}_+\}$ such that $\alpha_m-\beta_+^{j-1}=0$, while
-    \begin{align*}
-        \alpha_m-\beta_-^{j-1}&\neq0,\quad\forall m\in i^{(+)},\quad j=1,\dots,N_+,\\
-        \alpha_n-\beta_+^{j-1}&\neq0,\quad\forall n\in i^{(-)},\quad j=1,\dots,N_+.
-    \end{align*}
-    If $\tilde{N}_- < \tilde{N}_+$, then we choose recursion parameters as in~\eqref{eq:owns-p-params_minus}, which yields
-    \[
-    \prod_{j=0}^{\tilde{N}_--1}\frac{|\alpha_m-\beta_{+}^{j}|}{|\alpha_m-\beta_-^j|}
-    \frac{|\alpha_n-\beta_{-}^{j}|}{|\alpha_n-\beta_+^j|}=0,\quad\forall m\in i^{(+)},n\in i^{(-)},
-    \]
-    where for all $n\in i^{(-)}$ there exists some $j\in \{1,\dots,\tilde{N}_-\}$ such that $\alpha_n-\beta_-^{j-1}=0$, while
-    \begin{align*}
-        \alpha_m-\beta_-^{j-1}&\neq0,\quad\forall m\in i^{(+)},\quad j=1,\dots,N_-,\\
-        \alpha_n-\beta_+^{j-1}&\neq0,\quad\forall n\in i^{(-)},\quad j=1,\dots,N_-.
-    \end{align*}
-    Next, if there exists $\hat{m}\in i^{(+)}$ and $\hat{n}\in i^{(-)}$ such that $\alpha_{\hat{m}}=\alpha_{\hat{n}}$, then
-    \[
-    (F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++})_{\hat{n}\hat{m}}
-    =
-    \prod_{j=0}^{N_\beta-1}\frac{\alpha_{\hat{m}}-\beta_{+}^{j}}{\alpha_{\hat{m}}-\beta_-^j}\frac{\alpha_{\hat{n}}-\beta_{-}^{j}}{\alpha_{\hat{n}}-\beta_+^j}
-    (V_{--}^{-1}V_{-+})_{\hat{n}\hat{m}}
-    =
-    (V_{--}^{-1}V_{-+})_{\hat{n}\hat{m}}
-    \neq 0
-    \]
-    so that $R_{N_\beta}^{-1}\neq I$, for any choice of recursion parameters.
-\end{proof}
-
-
-\begin{theorem}[Block matrix inverse]\label{thm:blockInverse}
-    If a matrix is partitioned into four blocks such that
-    \begin{subequations}
-    \begin{equation}
-        R=\begin{bmatrix}
-            R_{++} & R_{+-}\\
-            R_{-+} & R_{--}
-        \end{bmatrix},
-    \end{equation}
-    then it can be inverted blockwise as    
-    \begin{equation}
-        R^{-1}
-        =
+        R_{N_\beta}=S^{-1}=
         \begin{bmatrix}
-            R_{++} & R_{+-}\\
-            R_{-+} & R_{--}
+            S_{++} & S_{+-}\\
+            S_{-+} & S_{--}
         \end{bmatrix}^{-1}
         =
         \begin{bmatrix}
-            [R^{-1}]_{++} & [R^{-1}]_{+-}\\
-            [R^{-1}]_{-+} & [R^{-1}]_{--}
-        \end{bmatrix}
-    \end{equation}
-    where
-    \begin{align}
-        [R^{-1}]_{++} &= (R_{++}-R_{+-}R_{--}^{-1}R_{-+})^{-1},\\
-        [R^{-1}]_{+-} &=-(R_{++}-R_{+-}R_{--}^{-1}R_{-+})^{-1}R_{+-}R_{--}^{-1},\\
-        [R^{-1}]_{-+} &=-R_{--}^{-1}R_{-+}(R_{++}-R_{+-}R_{--}^{-1}R_{-+})^{-1},\\
-        [R^{-1}]_{--} &= R_{--}^{-1}+R_{--}^{-1}R_{-+}(R_{++}-R_{+-}R_{--}^{-1}R_{-+})^{-1}R_{+-}R_{--}^{-1}.
-    \end{align}
-    \end{subequations}
-\end{theorem}
-
-\begin{theorem}[Neumann series]\label{thm:neumannSeries}
-    For a matrix $R$, if the sum $\sum_{k=0}^{\infty} R^k$ converges to a finite value, then
-    \begin{equation}
-        (I-R)^{-1}=\sum_{k=0}^\infty R^k.
-    \end{equation}
-\end{theorem}
-
-
-The proof of Proposition~\ref{prop:errOWNSP} relies on two theorems. Theorem~\ref{thm:blockInverse} provides an expression for the inverse of a block matrix, while Theorem~\ref{thm:neumannSeries} provides conditions a means to bound expressions of the form $(I-R)^{-1}$.
-
-\begin{proof}[Proof of Proposition~\ref{prop:errOWNSP}]
-    First note that
-    \begin{align*}
-    \|P-P_{N_\beta}\|
-    &=\|VEV^{-1}-VR_{N_\beta}^{-1}ER_{N_\beta}V^{-1}\|\\
-    &=\|V(E-R_{N_\beta}^{-1}ER_{N_\beta})V^{-1}\|\\
-    &\leq \|V\| \|E-R_{N_\beta}^{-1}ER_{N_\beta}\| \|V^{-1}\|,
-    \end{align*}
-    while by Theorem~\ref{thm:blockInverse} for the inverse of a block matrix
-    \begin{align*}
-        R_{N_\beta}^{-1} E R_{N_\beta}
-        &=
-        \begin{bmatrix}
-            [R_{N_\beta}^{-1}]_{++} & [R_{N_\beta}^{-1}]_{+-}\\
-            [R_{N_\beta}^{-1}]_{-+} & [R_{N_\beta}^{-1}]_{--}
-        \end{bmatrix}
-        \begin{bmatrix}
-            I_{++} & 0\\
-            0 & 0
-        \end{bmatrix}
-        \begin{bmatrix}
-            [R_{N_\beta}]_{++} & [R_{N_\beta}]_{+-}\\
-            [R_{N_\beta}]_{-+} & [R_{N_\beta}]_{--}
-        \end{bmatrix}\\
-        &=
-        \begin{bmatrix}
-            [R_{N_\beta}^{-1}]_{++} & 0\\
-            [R_{N_\beta}^{-1}]_{-+} & 0
-        \end{bmatrix}
-        \begin{bmatrix}
-            [R_{N_\beta}]_{++} & [R_{N_\beta}]_{+-}\\
-            0 & 0
-        \end{bmatrix}\\
-        &=
-        \begin{bmatrix}
-            [R_{N_\beta}^{-1}]_{++}[R_{N_\beta}]_{++} &
-            [R_{N_\beta}^{-1}]_{++}[R_{N_\beta}]_{+-}\\
-            [R_{N_\beta}^{-1}]_{-+}[R_{N_\beta}]_{++} &
-            [R_{N_\beta}^{-1}]_{-+}[R_{N_\beta}]_{+-}
-        \end{bmatrix}.
-    \end{align*}
-    so that
-    \[
-    E-R_{N_\beta}^{-1}E R_{N_\beta}
-    =
-    \begin{bmatrix}
-            [R_{N_\beta}^{-1}]_{++}[R_{N_\beta}]_{++} - I_{++} &
-            [R_{N_\beta}^{-1}]_{++}[R_{N_\beta}]_{+-}\\
-            [R_{N_\beta}^{-1}]_{-+}[R_{N_\beta}]_{++} &
-            [R_{N_\beta}^{-1}]_{-+}[R_{N_\beta}]_{+-}
+            [S^{-1}]_{++} & [S^{-1}]_{+-}\\
+            [S^{-1}]_{-+} & [S^{-1}]_{--}
         \end{bmatrix}.
     \]
-    By the triangle inequality
-    \begin{align*}
+    Then
+    \[
+    E-R_{N_\beta}E R_{N_\beta}^{-1}
+    =
+    E-S^{-1} E S
+    =
+    \begin{bmatrix}
+            ([S^{-1}]_{++})(S_{++})- I_{++} &
+            ([S^{-1}]_{++})(S_{+-})\\
+            ([S^{-1}]_{-+})(S_{++}) &
+            ([S^{-1}]_{-+})(S_{+-})
+        \end{bmatrix}.
+    \]
+    and by the triangle inequality
+    \begin{align}
+    \begin{split}
     \|E-R_{N_\beta}^{-1}E R_{N_\beta}\|
     &\leq
-    \|[R_{N_\beta}^{-1}]_{++}[R_{N_\beta}]_{++} - I_{++}\|
-    +\|[R_{N_\beta}^{-1}]_{++}[R_{N_\beta}]_{+-}\|\\
-    &+\|[R_{N_\beta}^{-1}]_{-+}[R_{N_\beta}]_{++}\|
-    +\|[R_{N_\beta}^{-1}]_{-+}[R_{N_\beta}]_{+-}\|,
-    \end{align*}
-    while
+    \|([S^{-1}]_{++})(S_{++}) - I_{++}\|
+    +\|([S^{-1}]_{++})(S_{+-})\|\\
+    &+\|([S^{-1}]_{-+})(S_{++})\|
+    +\|([S^{-1}]_{-+})(S_{+-})\|.
+    \end{split}
+    \label{eq:errBoundTriangle}
+    \end{align} 
+    Next we have
     \begin{align*}
-        [R_{N_\beta}]_{++}&=I_{++}\\
-        [R_{N_\beta}]_{+-}&=F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\\
-        [R_{N_\beta}^{-1}]_{++}&=(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1},\\
-        [R_{N_\beta}^{-1}]_{-+}&=-F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1},
+        [S^{-1}]_{++}
+        &=(S_{++}-S_{+-}S_{--}^{-1}S_{-+})^{-1},\\
+        &=(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\\
+        [S^{-1}]_{-+}
+        &=-S_{--}^{-1}S_{-+}[S^{-1}]_{++}\\
+        &=-F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1},
     \end{align*}
-    so that
-    \begin{align*}
-        \|[R_{N_\beta}^{-1}]_{++}[R_{N_\beta}]_{++}-I_{++}\|
+    while $S_{++}=I_{++}$ and $S_{-+}=F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}$ so that
+    \begin{subequations}
+    \begin{align}
+    \begin{split}
+        \|([S^{-1}]_{++})(S_{++})- I_{++}\|
         &\leq
-        \|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|\times\|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|
-        \\
-        &\times\|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|,\\
-        \|[R_{N_\beta}^{-1}]_{++}[R_{N_\beta}]_{+-}\|
+        \|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|\times
+        \|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|\\
+        &\times
+        \|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|
+    \end{split}\\
+    \begin{split}
+        \|([S^{-1}]_{++})(S_{+-})\|
         &\leq
         \|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|\\
         &\times
-        \|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|,\\
-        \|[R_{N_\beta}^{-1}]_{-+}[R_{N_\beta}]_{++}\|
+        \|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|,
+    \end{split}\\
+    \begin{split}
+        \|([S^{-1}]_{-+})(S_{++})\|
         &\leq\|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|\\
-        &\times\|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|,\\
-        \|[R_{N_\beta}^{-1}]_{-+}[R_{N_\beta}]_{+-}\|
+        &\times\|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|,
+    \end{split}\\
+    \begin{split}
+        \|([S^{-1}]_{-+})(S_{+-})\|
         &\leq\|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|
         \times\|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|\\
         &\times\|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|.
-    \end{align*}
-    Combining these results yields
-    \begin{align*}
-        \|E-R_{N_\beta}^{-1}ER_{N_\beta}\|&\leq \|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|
-        \big(
-        \|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|\\
-        &+2\|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|\|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|
-        +\|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|
-        \big).
-    \end{align*}
-    Next we note that
-    \[
-        \sum_{k=0}^\infty(F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^k
-    \]
-    is finite if
-    \[
-    \|F_{++}\|\|F_{--}^{-1}\|<(\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|)^{-1/2}.
-    \]
-    Take some $\hat{\epsilon}>0$ such that $\hat{\epsilon}\ll1$ and define
-    \[
-    \epsilon =\min\{\hat{\epsilon},\|V_{++}^{-1}V_{+-}\|^{-1/2}\|V_{--}^{-1}V_{-+}\|^{-1/2}\}.
-    \]
-    Then assuming $\|F_{++}\|\|F_{--}^{-1}\|<\epsilon$, Theorem~\ref{thm:neumannSeries} for Neumann series applies and
-    \begin{align*}
-        &\|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|\\
-        &\leq \sum_{k=0}^\infty\|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++}\|^k\\
-        &\leq \sum_{k=0}^\infty(\|F_{++}\|^2\|F_{--}^{-1}\|^2\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|)^k\\
-        &=1+\|F_{++}\|^2\|F_{--}^{-1}\|^2\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|+\mathcal{O}(\|F_{++}\|^4\|F_{--}^{-1}\|^4),
-    \end{align*}
-    while
-    \begin{align*}
-        \|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|&\leq\|F_{++}\|\|F_{--}^{-1}\|\|V_{++}^{-1}V_{+-}\|,\\
-        \|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|&\leq\|F_{++}\|\|F_{--}^{-1}\|\|V_{--}^{-1}V_{-+}\|,
-    \end{align*}
-    so that
-    \begin{align*}
-    \|E-R_{N_\beta}^{-1}ER_{N_\beta}\|
-    &\leq[1+\|F_{++}\|^2\|F_{--}^{-1}\|^2\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|+\mathcal{O}(\epsilon^4)]\\
-    &\times\|F_{++}\|\|F_{--}^{-1}\|
-    [\|V_{++}^{-1}V_{+-}\|+\|V_{--}^{-1}V_{-+}\|\\
-    &+2\|F_{++}\|\|F_{--}^{-1}\|\|V_{--}^{-1}V_{-+}\|\|V_{++}^{-1}V_{+-}\|]\\
-    &=\|F_{++}\|\|F_{--}^{-1}\|\big(\|V_{++}^{-1}V_{+-}\|+\|V_{--}^{-1}V_{-+}\|\big)+\mathcal{O}(\epsilon^2),
-    \end{align*}
-    and
-    \[
-    \|P_{N_\beta}-P\|\leq \|V\|\|F_{++}\|\|F_{--}^{-1}\|\big(\|V_{++}^{-1}V_{+-}\|+\|V_{--}^{-1}V_{-+}\|\big)\|V^{-1}\|+\mathcal{O}(\epsilon^2),
-    \]
-    where we have used $\|F_{++}\|\|F_{--}^{-1}\|<\epsilon$.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:errCommP}]
-    Note that $\|PM-MP\|=0$ while
-    \begin{align*}
-    \|P_{N_\beta}M-MP_{N_\beta}\|
-    &=
-    \|(P_{N_\beta}-P)M+M(P-P_{N_\beta})\|\\
-    &\leq
-    2\|P_{N_\beta}-P\|\|M\|\\
-    &\leq
-    2\|V\|\|F_{++}\|\|F_{--}^{-1}\|\big(\|V_{++}^{-1}V_{+-}\|\\
-    &+\|V_{--}^{-1}V_{-+}\|\big)\|V^{-1}\|\|M\|+\mathcal{O}(\epsilon^2),
-    \end{align*}
-    by Proposition~\ref{prop:errOWNSP}.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:greedy-p}]
-    A downstream-going mode associated with $\alpha_m$ is retained accurately if $\psi_m^0-\psi_m=0$, while by equation~\eqref{eq:owns-p-filter-downstream} we have
-    \[
-    \psi_m^{0}-\psi_m=\prod_{j=0}^{N_\beta-1}\frac{\alpha_m - \beta_+^j}{\alpha_m- \beta_-^{j}}\psi_m^{-N_\beta}=0
-    \]
-    since $\alpha_m=\beta_+^j$ for some $\beta_+^j$, while $\alpha_m\neq\beta_-^j$ for all $\beta_-^j$. An upstream-going mode associated with $\alpha_n$ is removed if $\psi_n^0=0$, while by equation~\eqref{eq:owns-p-filter-upstream} we have
-    \[
-    \psi_n^0=\prod_{j=0}^{N_\beta-1}\frac{\alpha_n - \beta_-^j}{\alpha_n- \beta_+^{j}}\psi_n^{ N_\beta}=0
-    \]
-    since $\alpha_n=\beta_-^j$ for some $\beta_-^j$, while $\alpha_n\neq\beta_+^j$ for all $\beta_+^j$.
-\end{proof}
-
-
-\subsection{Proofs for OWNS-R}\label{app:Proofs-R}
-
-\begin{proof}[Proof or Proposition~\ref{prop:owns-r-implementation}]
-    We diagonalize~\eqref{eq:filter-r} to obtain
-    \[
-    \big[h\prod_{j=1}^{N_\beta}(\alpha_k-i\beta_*^j)\big]\psi_k^{N_\beta}
-    =\big[\prod_{j=1}^{N_\beta}(\alpha_k-i\beta_-^j)\big]\psi_k,\quad k=1,\dots,N,
-    \]
-    while using~\eqref{eq:owns-r-polynomial} yields
-    \[
-    \big[\prod_{j=1}^{N_\beta}(\alpha_k-\beta_-^j)+c\prod_{j=1}^{N_\beta}(\alpha_k-\beta_+^j)]\psi_k^{N_\beta}
-    =\big[\prod_{j=1}^{N_\beta}(\alpha_k-i\beta_-^j)\big]\psi_k,\quad k=1,\dots,N.
-    \]
-    We re-arrange to obtain
-    \[
-    \psi_k^{N_\beta}
-    =\big[1+c\prod_{j=1}^{N_\beta}(\alpha_k-\beta_+^j)(\alpha_k-\beta_-^j)^{-1}]^{-1}\psi_k,\quad k=1,\dots,N.
-    \]
-    or $\bm{\psi}^{N_\beta}=(1+cF)^{-1}\bm{\psi}$, while
-    \[
-    \hat{\bm{\phi}}^{N_\beta}
-    =V(1+cF)^{-1}V^{-1}\hat{\bm{\phi}}
-    =VE_{N_\beta}V^{-1}
-    =P_{N_\beta}^{(R)}\hat{\bm{\phi}}.
-    \]
-    since $\bm{\psi}=V^{-1}\hat{\bm{\phi}}$.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:projMatOWNS-R}]
-    First note that
-    \[
-    P^{(R)}_{N_{\beta}}
-    P^{(R)}_{N_{\beta}}
-    =VE_{N_\beta}V^{-1}VE_{N_\beta}V^{-1}
-    =VE^2_{N_\beta}V^{-1},
-    \]
-    so that $P_{N_\beta}^{(R)}$ is a projection matrix if and only if $E_{N_\beta}^2=E_{N_\beta}$. Since $E_{N_\beta}$ is diagonal, we can consider each entry separately so that we must have $E_{N_\beta,k}^2=E_{N_\beta,k}$ for $k=1,\dots,N$, which requires that $E_{N_\beta,k}\in\{0,1\}$.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:minimalOWNS-R}]
-    If $\alpha_m\neq\alpha_n$ for all pairs of $m\in i^{(+)}$ and $n\in i^{(-)}$, then choose recursion parameters according to~\eqref{eq:OWNS-R-params} so that
-    \begin{align*}
-    E_{\tilde{N}_++\tilde{N}_-}^{(m)}
-    &=\frac{\prod_{j=1}^{\tilde{N}_++\tilde{N}_-}(\alpha_m-\beta_-^j)}{\prod_{j=1}^{\tilde{N}_++\tilde{N}_-}(\alpha_m-\beta_-^j)+0}
-    =1,\quad \forall m\in i^{(+)},\\
-    E_{\tilde{N}_++\tilde{N}_-}^{(n)}
-    &=\frac{0}{0+c\prod_{j=1}^{\tilde{N}_++\tilde{N}_-}(\alpha_n-\beta_+^j)}
-    =0,\quad \forall n\in i^{(-)},
-    \end{align*}
-    where
-    \begin{align*}
-        \prod_{j=1}^{\tilde{N}_++\tilde{N}_-}(\alpha_m-\beta_+^j)=0,\quad
-        \prod_{j=1}^{\tilde{N}_++\tilde{N}_-}(\alpha_m-\beta_-^j)\neq0,\quad\forall m\in i^{(+)}\\
-        \prod_{j=1}^{\tilde{N}_++\tilde{N}_-}(\alpha_n-\beta_-^j)=0,\quad
-        \prod_{j=1}^{\tilde{N}_++\tilde{N}_-}(\alpha_n-\beta_+^j)\neq0,\quad\forall n\in i^{(-)}
-    \end{align*}
-    by construction.
-    
-    If there exists $\hat{m}\in i^{(+)}$ and $\hat{n}\in i^{(-)}$ such that $\alpha_{\hat{m}}=\alpha_{\hat{n}}$, then there does not exist any choice of recursion parameters such that $P_{N_\beta}^{(R)}\to P$. By contradiction, suppose there exists recursion parameters such that $P_{N_\beta}^{(R)}\to P$, then we must have $E_{N_\beta}^{(\hat{m})}\to1$ and $E_{N_\beta}^{(\hat{n})}\to0$, but $E_{N_\beta}^{(\hat{m})}=E_{N_\beta}^{(\hat{n})}$ and $1\neq0$, leading to a contradiction.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:minimalOWNS-R-false}]
-    If $\tilde{N}_+\leq \tilde{N}_-$, take recursion parameters according to~\eqref{eq:owns-p-params_plus}. Then there exists $n\in i^{(-)}$ such that
-    \[
-    \prod_{j=1}^{\tilde{N}_+}(\alpha_n-\beta_-^j)\neq 0,\quad
-    |\prod_{j=1}^{\tilde{N}_+}(\alpha_n-\beta_-^j)|,|\prod_{j=1}^{\tilde{N}_+}(\alpha_n-\beta_+^j)|<\infty,
-    \]
-    so that
-    \[
-        E_{\tilde{N}_+}^{(n)}
-        =\frac{\prod_{j=1}^{\tilde{N}_+}(\alpha_n-\beta_-^j)}
-        {\prod_{j=1}^{\tilde{N}_+}(\alpha_n-\beta_-^j)+ c \prod_{j=1}^{\tilde{N}_+}(\alpha_n-\beta_+^j)}\neq0.
-    \]
-    If $\tilde{N}_-<\tilde{N}_+$, take recursion parameters according to~\eqref{eq:owns-p-params_minus}. Then there exists $m\in i^{(+)}$ such that
-    \[
-    \prod_{j=1}^{\tilde{N}_-}(\alpha_m-\beta_+^j)\neq 0,\quad
-    |{\prod_{j=1}^{\tilde{N}_-}(\alpha_m-\beta_-^j)|,|\prod_{j=1}^{\tilde{N}_-}(\alpha_m-\beta_+^j)}\neq0.
-    \]
-    so that
-    \[
-        E_{\tilde{N}_-}^{(m)}
-        =\frac{\prod_{j=1}^{\tilde{N}_-}(\alpha_m-\beta_-^j)}
-        {\prod_{j=1}^{\tilde{N}_-}(\alpha_m-\beta_-^j)+c\prod_{j=1}^{\tilde{N}_-}(\alpha_m-\beta_+^j)}\neq1.
-    \]
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:minimalOWNS-R-true}]
-    Taking $N_\beta=N$ with parameters~\eqref{eq:OWNS-R-params} guarantees that $|\alpha_m-\beta_+^j|=0$ for all $m\in i^{(+)}$ for some $j=1,\dots,\tilde{N}_++\tilde{N}_-$ and that $|\alpha_n-\beta_-^j|=0$ for all $n\in i^{(-)}$ for some $j=1,\dots,\tilde{N}_++\tilde{N}_-$, so that
-    \[
-    \prod_{j=0}^{\tilde{N}_++\tilde{N}_--1}\frac{|\alpha_m-\beta_{+}^{j}|}
-    {|\alpha_m-\beta_-^j|}
-    \frac{|\alpha_n-\beta_{-}^{j}|}
-    {|\alpha_n-\beta_+^j|}=0,\quad \forall m\in i^{(+)},\quad \forall n\in i^{(-)}.
-    \]
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:errOWNSR}]
-    Note that
-    \[
-        \|P-P_{N_\beta}^{(R)}\|
-        =\|VEV^{-1}-VE_{N_\beta}V^{-1}\|
-        \leq\|V\|\|E-E_{N_\beta}\|\|V^{-1}\|,
-    \]
-    where for the downstream-going modes
-    \begin{align*}
-    E^{(k)}-E_{N_\beta}^{(k)}
-    &=
-    1-\frac{\prod_{j=1}^{N}(\alpha_k-\beta_-^j)}{\prod_{j=1}^{N}(\alpha_k-\beta_-^j)+c\prod_{j=1}^{N}(\alpha_k-\beta_+^j)}\\
-    &=
-    \frac{c\prod_{j=1}^{N}(\alpha_k-\beta_+^j)}{\prod_{j=1}^{N}(\alpha_k-\beta_-^j)+c\prod_{j=1}^{N}(\alpha_k-\beta_+^j)}\\
-    &=
-    \frac{c F_k}{1+c F_k},
-    \end{align*}
-    for $k=i^{(+)}$, while for the upstream-going modes
-    \begin{align*}
-    E^{(k)}-E_{N_\beta}^{(k)}
-    &=
-    0-\frac{\prod_{j=1}^{N}(\alpha_k-\beta_-^j)}{\prod_{j=1}^{N}(\alpha_k-\beta_-^j)+c\prod_{j=1}^{N}(\alpha_k-\beta_+^j)}\\
-    &=
-    -\frac{F_k^{-1}}{F_k^{-1}+c},
-    \end{align*}
-    for $k=i^{(-)}$. Assuming that $|F_k|<\epsilon\ll1$ for $k=i^{(+)}$ and $|F_k^{-1}|<\epsilon\ll1$ for $k=i^{(-)}$ we obtain
-    \begin{align*}
-        |E^{(k)}-E_{N_\beta}^{(k)}|&=|c||F_k|+\mathcal{O}(|F_k|^2),\quad k=i^{(+)}\\
-        |E^{(k)}-E_{N_\beta}^{(k)}|&=|F_k^{-1}|+\mathcal{O}(|F_k^{-1}|^2),\quad k=i^{(-)}.
-    \end{align*}
-    Since $E-E_{N_\beta}$ is a diagonal matrix we obtain
-    \begin{align*}
-    \|E-E_{N_\beta}\|
-    &=\max\big\{ \max_{k=1,\dots,N_+}|c||F_k|+\mathcal{O}(\epsilon^2), \max_{k=N_++1,\dots,N}|F_k^{-1}|+\mathcal{O}(\epsilon^2) \big\}\\
-    &=\max\big\{ |c|\|F_{++}\|, \|F_{--}^{-1}\| \big\}+\mathcal{O}(\epsilon^2),
-    \end{align*}
-    so that
-    \[
-    \|P-P_{N_\beta}^{(R)}\|\leq
-    \|V\|\max\big\{ |c|\|F_{++}\|, \|F_{--}^{-1}\| \big\}\|V^{-1}\|+\mathcal{O}(\epsilon^2).
-    \]
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:greedy-r}]
-    If $\beta_+^j=\alpha_m$ for downstream-going mode $\alpha_m$, then $E_{N_\beta}^{(m)}=1$. Taking $\bm{\psi}$ such that $\psi_k=0$ for $k\neq m$ and $\psi_m=1$, we have $P_{N_\beta}^{(R)}V\bm{\psi}=VE_{N_\beta}\bm{\psi}=V\bm{\psi}$. Similarly, if $\beta_-^j=\alpha_n$ for upstream-going mode $\alpha_n$, then $E_{N_\beta}^(n)=0$. Taking $\bm{\psi}$ such that $\psi_k=0$ for $k\neq n$ and $\psi_n=1$, we have $P_{N_\beta}^{(R)}V\bm{\psi}=VE_{N_\beta}\bm{\psi}=0$.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:owns-r-repeat-blowup}]
-    Note that
-    \[
-    (P_{N_\beta}^{(R)})^n = V E_{N_\beta}^n V^{-1},
-    \]
-    and that
-    \[
-    \lim_{n\to\infty} |E_{N_\beta}^{(k)}|^n=
-    \begin{cases}
-        0 & |E_{N_\beta}^{(k)}| < 0,\\
-        1 & |E_{N_\beta}^{(k)}| = 1,\\
-        \infty & |E_{N_\beta}^{(k)}| > 1.
-    \end{cases}
-    \]    
-    If $|E_{N_\beta}^{(k)}| < 1$, then mode $k$ will be removed by repeated applications of $P_{N_\beta}^{(R)}$, which is desirable for upstream-going modes, but not for downstream-going modes. In contrast, if $|E_{N_\beta}^{(k)}| > 1$, then mode $k$ will grow without bound through repeated applications of $P_{N_\beta}^{(R)}$, which is undesirable for both upstream- and downstream-going modes. If $E_{N_\beta}^{(k)}=1$, then mode $k$ will be accurately retained. Therefore, repeated applications of $P_{N_\beta}^{(R)}$ introduces error unless unless $|E_{N_\beta}^{(n)}|<1$ for all $n=i^{(-)}$, and $E_{N_\beta}^{(m)}=1$ for all $m=i^{(+)}$.
+    \end{split}
+    \end{align}
+    \label{eq:errBoundBlockInverse}
+    \end{subequations}
+    Substituting~\eqref{eq:errBoundBlockInverse} into~\eqref{eq:errBoundTriangle} yields~\eqref{eq:errBoundTriangleFinal}.
 \end{proof}
 
