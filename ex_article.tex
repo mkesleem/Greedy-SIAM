@@ -41,6 +41,10 @@
 % comment
 \usepackage{xcolor}
 \newcommand{\michael}[1]{\textcolor{magenta}{Michael: #1}}
+\newcommand{\response}[1]{\textcolor{red}{#1}}
+
+% table
+\usepackage{booktabs}
 
 \begin{document}
 
@@ -67,7 +71,7 @@ Wave propagation can be modeled by (linear) systems of first-order hyperbolic pa
 
 While the linearized Euler equations comprise a system of first-order hyperbolic equations, the linearized Navier-Stokes do not. Nevertheless, the One-Way Navier-Stokes (OWNS) framework generalizes the approach of Towne and Colonius to the linearized Navier-Stokes equations~\cite{Towne_2022_OWNS-P,Kamal_2020_HOWNS,Kamal_2021_OWNS_IO,Kamal_2022_HOWNS,Rigas_2017_OWNS_BL}, where it has been used for linear disturbance evolution in turbulent jets and boundary layers. When applied to the Navier-Stokes equations, the method is now referred to as the OWNS outflow (OWNS-O) approach since it is based on work by Givoli and Neta~\cite{Givoli_2003_NRBC} and Hagstrom and Warburton~\cite{Hagstrom_2004_NRBC} for non-reflective boundary conditions (NRBCs) at ``outflow'' boundaries. For brevity, we will use the OWNS label, but we will perform our analysis on systems of linear first-order hyperbolic equations, and refer to Towne et al.~\cite{Towne_2022_OWNS-P} for the details on generalizing the method to the Navier-Stokes equations.
 
-The \textit{exact} formulation of OWNS-O avoids factoring the dispersion relation by (i) discretizing in the transverse directions to obtain a semi-discrete ordinary differential equation (ODE) in the marching direction~\eqref{eq:HyperbolicPDE_D_char_freq}, (ii) computing the eigendecomposition of the discretized linear operator, $M$ in~\eqref{eq:HyperbolicPDE_D_char_freq}, (iii) using Briggs' criterion~\cite{Briggs_1964_Electron} to classify the eigenvectors as left or right-going, and (iv) using this information to construct a one-way equation for the right-going waves. Since computing the eigendecomposition is computationally expensive, the \textit{approximate} formulation instead uses a \textit{recursive filter} to construct an approximate one-way equation, which converges to the exact one-way equation if its \textit{recursion parameters} are well-chosen. If the location (in the complex plane) and direction (left- or right-going) of all eigenvalues are known, then it is always possible to choose convergent recursion parameters. However, since the recursive filter is used to avoid computing the eigendecomposition of $M$, convergent recursion parameters must be chosen without complete knowledge of the eigenvalues of $M$. For example, Towne and Colonius addressed this issue for the Euler equations by using the eigenvalues of the Euler equations linearized about a uniform flow (which can be computed analytically) to inform recursion parameter selection for nonuniform flows. Throughout this paper, we refer to this as \textit{heuristic} recursion parameter selection.
+The \textit{exact} formulation of OWNS-O avoids factoring the dispersion relation by (i) discretizing in the transverse directions to obtain a semi-discrete ordinary differential equation (ODE) in the marching direction~\eqref{eq:HyperbolicPDE_D_char_freq}, (ii) computing the eigendecomposition of the discretized linear operator, $M$ in~\eqref{eq:HyperbolicPDE_D_char_freq}, (iii) using Briggs' criterion~\cite{Briggs_1964_Electron} to classify the eigenvectors as left or right-going, and (iv) using this information to construct a one-way equation for the right-going waves. Since computing the eigendecomposition is computationally expensive, the \textit{approximate} formulation instead uses a \textit{recursive filter} to construct an approximate one-way equation, which converges to the exact one-way equation if its \textit{recursion parameters} are well-chosen. If the location (in the complex plane) and direction (left- or right-going) of all eigenvalues are known, then it is always possible to choose convergent recursion parameters. However, since the recursive filter is used to avoid computing the eigendecomposition of $M$, convergent recursion parameters must be chosen without complete knowledge of the eigenvalues of $M$. Towne and Colonius used the eigenvalues of the Euler equations, linearized about a uniform flow (which can be computed analytically), to inform recursion parameter selection for nonuniform flows. Throughout this paper, we refer to this as \textit{heuristic} recursion parameter selection.
 
 OWNS-O can only be applied to homogeneous (unforced) equations, motivating the development of the OWNS projection (OWNS-P)~\cite{Towne_2022_OWNS-P} and OWNS recursive (OWNS-R)~\cite{Zhu_2021_OWNS-R} approaches, which can be applied to inhomogeneous (forced) equations. We note that OWNS-P and OWNS-R use recursive filters to obtain approximate one-way equations, which differ from each other but are both approximations to the same \textit{exact} one-way equation (which is also different from the \textit{exact} OWNS-O equation). We further note that note that Rudel et al.~\cite{Rudel_2022_Bremmer} have also used recursive filters to construct one-way equations for wave propagation in complex media, which can also be applied to inhomogeneous equations, while Sleeman et al.~\cite{Sleeman_2025_NOWNS_AIAAJ} have developed the nonlinear OWNS (NOWNS) approach, based on OWNS-P, which enables nonlinear disturbance evolution in boundary layers.
 
@@ -77,9 +81,9 @@ OWNS-O can only be applied to homogeneous (unforced) equations, motivating the d
 
 %Unlike the Euler equations, the Navier-Stokes equations are not hyperbolic. Nevertheless, the One-Way Navier-Stokes (OWNS) framework generalizes the approach of Towne and Colonius to the linearized Navier-Stokes equations~\cite{Towne_2022_OWNS-P,Kamal_2020_HOWNS,Kamal_2021_OWNS_IO,Kamal_2022_HOWNS,Rigas_2017_OWNS_BL}, where it has been used for linear disturbance evolution in turbulent jets and boundary layers. When applied to the Navier-Stokes equations, the method is now referred to as the OWNS outflow (OWNS-O) approach since it is based on recursive filters for outflow boundaries. OWNS-O can only be applied to homogeneous (unforced) equations, which motivated the development of the OWNS projection (OWNS-P)~\cite{Towne_2022_OWNS-P} and OWNS recursive (OWNS-R)~\cite{Zhu_2021_OWNS-R} approaches for inhomogeneous (forced) equations. Finally, we note that Rudel et al.~\cite{Rudel_2022_Bremmer} have also used recursive filters to construct one-way equations for wave propagation in complex media, while Sleeman et al.~\cite{Sleeman_2025_NOWNS_AIAAJ} have developed the nonlinear OWNS (NOWNS) approach, based on OWNS-P, which enables nonlinear disturbance evolution in boundary layers. For simplicity, we will use the OWNS label even when we are analyzing hyperbolic equations.
 
-Although the \textit{heuristic} recursion parameter selection routine developed by Towne and Colonius has proven effective for the Euler and Navier-Stokes equations, it requires problem-specific parameter tuning (e.g., subsonic and supersonic boundary layer flows require different parameters). Therefore, we propose a \textit{greedy} algorithm for automatic recursion parameter selection that can be applied to any system of first-order hyperbolic equations, as well as the Navier-Stokes equations. Unlike the \textit{heuristic} approach, we compute and label the eigenvalues of $M$. Then we randomly select one left- and one right-going eigenvalue as the initial parameter set and use a bound on the recursive filter error to iteratively append the worst-approximated left- and right-going eigenvalues until convergence. We demonstrate for linear and nonlinear disturbance evolution in subsonic and supersonic boundary-layer flows (modeled using the Navier-Stokes equations) that the greedy approach yields faster filter convergence than the heuristic approach, while also leading to a reduced computational cost. We further show for nonlinear disturbance evolution in a supersonic boundary layer flow that while the heuristic selection contaminates the solution with numerical error, this problem is alleviated using greedy selection.
+Although the \textit{heuristic} recursion parameter selection routine developed by Towne and Colonius has proven effective for the Euler and Navier-Stokes equations, it requires problem-specific parameter tuning (e.g., subsonic and supersonic boundary layer flows require different parameters). \response{As noted above, the eigenvalues of $M$ can be used to construct convergent recursion parameter sets. However, these sets are large, and smaller sets are desirable for accuracy, stability, and efficiency. We therefore formulate a \textit{subset selection} problem that, for a prescribed set size, selects a subset of the eigenvalues of $M$ such that the OWNS approximation error is minimized, enabling automatic recursion parameter selection. Subset selection is NP-hard~\cite{Natarajan_1995_OptimalSubset}, so we solve the optimization problem using a \textit{greedy} algorithm.} We demonstrate for linear and nonlinear disturbance evolution in subsonic and supersonic boundary-layer flows (modeled using the Navier-Stokes equations) that the greedy approach yields faster filter convergence than the heuristic approach, while also leading to a reduced computational cost. We further show for nonlinear disturbance evolution in a supersonic boundary layer flow that while the heuristic selection contaminates the solution with numerical error, this problem is alleviated using greedy selection.
 
-We additionally analyze the convergence properties for the OWNS-P and OWNS-R methods, showing that OWNS-P has superior convergence properties and that there exist recursion parameter sets for which OWNS-P is fully converged while OWNS-R is not. Consistent with our analysis, we find in our numerical experiments that there exist recursion parameter sets for which OWNS-P achieves a stable and accurate march while OWNS-R does not. In particular, we find that although our heuristic parameter selection routine has been demonstrated to yield stable and accurate OWNS-P marches for a wide variety of boundary-layer flows~\cite{Towne_2015_OWNS-O,Towne_2022_OWNS-P,Kamal_2020_HOWNS,Rigas_2017_OWNS_BL}, it does not generally yield stable OWNS-R marches for these flows. In contrast, greedy selection yields stable and accurate OWNS-R marches.
+We additionally analyze the convergence properties of the OWNS-P and OWNS-R methods, showing that \response{OWNS-P converges faster and that there exist recursion parameter sets for which OWNS-P is fully converged while OWNS-R is not. We demonstrate these properties numerically: our heuristic parameter selection routine yields stable OWNS-P marches but unstable OWNS-R marches, whereas greedy selection produces stable OWNS-R marches.}
 
 Section~\ref{sec:OWNS} reviews the OWNS-P and OWNS-R methods and analyzes their stability and convergence properties, while Section~\ref{sec:greedy} presents the greedy algorithm for recursion parameter selection. We present the Navier-Stokes equations in~\ref{sec:NSE}, followed by convergence results at a single station in  Section~\ref{sec:greedySingle}, and spatial marching results in  Section~\ref{sec:greedyMarching}.
 
@@ -89,16 +93,16 @@ Section~\ref{sec:OWNS} reviews the OWNS-P and OWNS-R methods and analyzes their 
 For an arbitrary system of linear first-order hyperbolic equations, Section~\ref{sec:global} develops the global equations we wish to approximate using one-way equations. Section~\ref{sec:Briggs} presents Briggs' criterion~\cite{Briggs_1964_Electron}, which we use to identify right- and left-going modes, while Section~\ref{sec:exact} uses this criterion to develop the exact one-way projection equations. Constructing the projection operator introduces numerical error while also entailing a high computational cost, so OWNS-P~\cite{Towne_2022_OWNS-P} and OWNS-R~\cite{Zhu_2021_OWNS-R} approximate its action using a rapidly-convergent \textit{recursive filter}. We conclude by reviewing OWNS-P and OWNS-R in Sections~\ref{subsec:OWNSP} and~\ref{subsec:OWNSR}, respectively, referring to Towne et al.~\cite{Towne_2022_OWNS-P} and Zhu and Towne~\cite{Zhu_2021_OWNS-R} for details on implementation. Throughout this paper, $\|\bm{b}\|$ for $\bm{b}\in\mathbb{R}^N$ denotes the Euclidean vector norm and $\|A\|$ for $A\in\mathbb{R}^{N\times N}$ denotes its induced matrix norm.
 
 \subsection{Global equations}\label{sec:global}
-Consider a system of first-order hyperbolic equations
+\response{Consider a system of first-order hyperbolic equations
 \begin{subequations}
     \begin{align}
-    \frac{\partial \bm{q}'}{\partial t}+A\frac{\partial \bm{q}'}{\partial x}+\sum_{j=2}^{d}B_j\frac{\partial \bm{q}'}{\partial y_j}+C \bm{q}'=\bm{f}\quad&\mathrm{on}\quad\Omega\times I\label{eq:HyperbolicPDE}\\
-    \bm{q}'=\bm{q}_0'\quad&\mathrm{on}\quad\Omega\times\{t=0\}\\
-    \bm{q}'=\bm{q}_{\mathrm{BC}}'\quad&\mathrm{on}\quad\partial\Omega\times I,
+    \frac{\partial q'}{\partial t}+\mathcal{A}\frac{\partial q'}{\partial x}+\sum_{j=2}^{d}\mathcal{B}_j\frac{\partial q'}{\partial y_j}+C q'=f\quad&\mathrm{on}\quad\Omega\times I\label{eq:HyperbolicPDE}\\
+    q'=q_0'\quad&\mathrm{on}\quad\Omega\times\{t=0\}\\
+    q'=q_{\mathrm{BC}}'\quad&\mathrm{on}\quad\partial\Omega\times I,
     \end{align}
     \label{eq:HyperbolicSystem}
 \end{subequations}
-in $d$ spatial-dimensions over the domain $\Omega\subset\mathbb{R}^d$ and time interval $I\equiv (0,T]$ for $T>0$, where $A,B_{j},C\in\mathbb{R}^{N\times N}$ for $j=2,\dots,d$, and $\bm{q}':\Omega\times I\to\mathbb{R}^N$ is the solution for initial condition $\bm{q}_0':\Omega\to\mathbb{R}^N$, boundary condition $\bm{q}_{\mathrm{BC}}':\partial\Omega\times I\to\mathbb{R}^N$, and forcing $\bm{f}:\Omega\times I\to\mathbb{R}^N$. If~\eqref{eq:HyperbolicSystem} is hyperbolic, then for all $\gamma_1,\dots,\gamma_d\in\mathbb{R}$ the matrix $\gamma_1A+\gamma_2B_2+\cdots+\gamma_dB_d$ has only real eigenvalues and is diagonalizable. Taking $\gamma_2=\cdots=\gamma_d=0$, we see that $A$ is diagonalizable with real eigenvalues $\tilde{A}=TAT^{-1}$ and eigenvectors $T^{-1}$, which use to define the characteristic variables $\bm{\phi}=T\bm{q}'$. Applying finite differences with appropriate boundary conditions in $(y_2,\dots,y_d)$ to~\eqref{eq:HyperbolicSystem} and transforming to characteristic variables yields
+in $d$ spatial-dimensions over the domain $\Omega\subset\mathbb{R}^d$ and time interval $I\equiv (0,T]$ for $T>0$, where $\mathcal{A},\mathcal{B}_{j},\mathcal{C}\in\mathbb{R}^{d\times d}$ for $j=2,\dots,d$, and $q':\Omega\times I\to\mathbb{R}^d$ is the solution for initial condition $q_0':\Omega\to\mathbb{R}^d$, boundary condition $q_{\mathrm{BC}}':\partial\Omega\times I\to\mathbb{R}^d$, and forcing $f:\Omega\times I\to\mathbb{R}^d$.} If~\eqref{eq:HyperbolicSystem} is hyperbolic, then for all $\gamma_1,\dots,\gamma_d\in\mathbb{R}$ the matrix $\gamma_1\mathcal{A}+\gamma_2\mathcal{B}_2+\cdots+\gamma_d\mathcal{B}_d$ has only real eigenvalues and is diagonalizable. Taking $\gamma_2=\cdots=\gamma_d=0$, we see that $\mathcal{A}$ is diagonalizable with real eigenvalues $\tilde{\mathcal{A}}=\mathcal{T}\mathcal{A}\mathcal{T}^{-1}$ and eigenvectors $\mathcal{T}^{-1}$, which use to define the characteristic variables $\phi=\mathcal{T}q'$. Applying finite differences with appropriate boundary conditions in $(y_2,\dots,y_d)$ to~\eqref{eq:HyperbolicSystem} and transforming to characteristic variables yields
 \begin{subequations}
 \begin{align}
     \frac{\partial \bm{\phi}'}{\partial t}+\tilde{A}\frac{\partial \bm{\phi}'}{\partial x}+\sum_{j=2}^{d}\tilde{B}_j\mathcal{D}_j\bm{\phi}'+\tilde{C} \bm{\phi}'=\bm{f}_{\phi}\quad&\mathrm{on}\quad[x_L,x_R]\times I\\
@@ -108,8 +112,7 @@ in $d$ spatial-dimensions over the domain $\Omega\subset\mathbb{R}^d$ and time i
 \end{align}
 \label{eq:HyperbolicPDE_D_char}
 \end{subequations}
-for the difference operator $\mathcal{D}_j$ where $L$ and $R$ denote values associated with the left and right boundaries, respectively, $\bm{f}_{\phi}=T\bm{f}$, $\tilde{B}_j=TB_jT^{-1}$ for $j=2,\dots,d$ and $\tilde{C}=TCT^{-1}+TA \partial T^{-1} /\partial x$.
-We assume that $\tilde{A}$ is non-singular (the singular case is treated by Towne et al.\cite{Towne_2022_OWNS-P}) so that $\tilde{A}=\diag(A_{++},A_{--})$, where $A_{++}\in\mathbb{R}^{N_+\times N_+}$ and $A_{--}\in\mathbb{R}^{N_-\times N_-}$ are positive and negative diagonal matrices, respectively. We take a Laplace transform in time to obtain
+for the difference operator $\mathcal{D}_j$ where $L$ and $R$ denote values associated with the left and right boundaries, respectively. \response{The matrices $A,B_j,C\in\mathbb{R}^{N\times N}$ and the vectors $\bm{q}',\bm{f}\in\mathbb{R}^N$ are the $y_j$-discretized versions of $\mathcal{A},\mathcal{B}_j,\mathcal{C}\in\mathbb{R}^{d\times d}$ and $q',f\in\mathbb{R}^d$, respectively. In turn this yields the matrices $\tilde{A}=TAT^{-1}$, $\tilde{B}_j=TB_jT^{-1}$, $\tilde{C}=TCT^{-1}+TA\partial_x T^{-1}$ and vectors $\bm{f}_{\phi}=T\bm{f}$, $\bm{\phi}=T\bm{q}'$ in characteristic variables.} We assume that $\tilde{A}$ is non-singular (the singular case is treated by Towne et al.\cite{Towne_2022_OWNS-P}) so that $\tilde{A}=\diag(A_{++},A_{--})$, where $A_{++}\in\mathbb{R}^{N_+\times N_+}$ and $A_{--}\in\mathbb{R}^{N_-\times N_-}$ are positive and negative diagonal matrices, respectively. We take a Laplace transform in time \response{with Laplace variable $s=\eta+i\omega$} to obtain
 \begin{equation}
 \frac{d \hat{\bm{\phi}}}{d x} = M(s)\hat{\bm{\phi}} + \hat{\bm{g}},
 \quad x \in [x_L, x_R],
@@ -124,7 +127,9 @@ We assume that $\tilde{A}$ is non-singular (the singular case is treated by Town
 %     \hat{\bm{\phi}}=\hat{\bm{\phi}}_{R}\quad&\mathrm{on}\quad\{x=x_R\},
 % \end{align}
 % \end{subequations}
-where $\hat{\bm{\phi}}$ and $\hat{\bm{g}}$ represent $\bm{\phi}$ and $\bm{f}_{\phi}$, respectively, in the frequency domain, while $M(s) = -\tilde{A}^{-1} \big(s I + \sum_{j=2}^{d} \mathcal{D}_j \tilde{B}_j + \tilde{C} \big)$. We assume that $M(s)$ is diagonalizable with eigenpairs $\{i\alpha_k(s),\bm{v}_k(s)\}_{k=1}^N$ since this is true for the problems we consider, while also simplifying the exposition (the defective case is handled by Towne and Colonius~\cite{Towne_2015_OWNS-O}).
+where $\hat{\bm{\phi}}$ and $\hat{\bm{g}}$ represent $\bm{\phi}$ and $\bm{f}_{\phi}$, respectively, in the frequency domain, while $M(s) = -\tilde{A}^{-1} \big(s I + \sum_{j=2}^{d} \mathcal{D}_j \tilde{B}_j + \tilde{C} \big)$. \response{We will ultimately set $\eta=0$
+study the long-time stationary solution at a specified forcing frequency $\omega$. For the moment, however, we retain $s$ instead of $i \omega$, allowing 
+$\eta\neq0$, which allows us to distinguish between left- and right-going eigenvalues. Since we are only interested in long-time behavior, we have not specified initial conditions in~\eqref{eq:HyperbolicPDE_D_char_freq}.} We assume that $M(s)$ is diagonalizable with eigenpairs $\{i\alpha_k(s),\bm{v}_k(s)\}_{k=1}^N$ since this is true for the problems we consider, while also simplifying the exposition (the defective case is handled by Towne and Colonius~\cite{Towne_2015_OWNS-O}).
 
 
 \subsection{Briggs' criterion}\label{sec:Briggs}
@@ -132,7 +137,7 @@ where $\hat{\bm{\phi}}$ and $\hat{\bm{g}}$ represent $\bm{\phi}$ and $\bm{f}_{\p
 Briggs' criterion (Definition~\ref{def:Briggs}) classifies eigenpairs as either left- or right-going, while Proposition~\ref{prop:Briggs} shows that $M(s)$ has precisely $N_+$ and $N_-$ right- and left-going eigenvalues, respectively.
 
 \begin{definition}[Briggs' criterion~\cite{Briggs_1964_Electron}]
-    Consider a wave (eigenvector) with complex wave-number (eigenvalue) $i\alpha$ for some $s=i\omega+\eta$ with $\omega,\eta\in\mathbb{R}$. This wave is right-going if $\lim_{\eta\to\infty}\mathcal{I}[\alpha(s)]\to\infty$, while it is left-going if $\lim_{\eta\to\infty}\mathcal{I}[\alpha(s)]\to-\infty$.
+    \response{Consider a wave (eigenvector) with complex wave-number (eigenvalue) $i\alpha(s)$. For fixed $\omega$, this wave is right-going if $\lim_{\eta\to\infty}\mathcal{I}[\alpha(s)]\to\infty$, while it is left-going if $\lim_{\eta\to\infty}\mathcal{I}[\alpha(s)]\to-\infty$. (Recall that $s=i\omega+\eta$.)}
     \label{def:Briggs}
 \end{definition}
 
@@ -149,7 +154,7 @@ For $\mathcal{R}(s)>0$, the matrix $M(s)$ has precisely $N_{+}$ and $N_{-}$ righ
     The eigenvalues are continuous functions of $s$ so taking the limit $\eta\to\infty$ yields $N_{+}$ eigenvalues with $\mathcal{I}[\alpha(s)]\to\infty$ and $N_{-}$ eigenvalues with $\mathcal{I}[\alpha(s)]\to-\infty$.
 \end{proof}
 
-We partition $M$ into left- and right-going blocks as
+\response{For the rest of this paper, we take $\eta=0$, as we only need $\eta\neq0$ to apply Briggs' criterion.} We partition $M$ into left- and right-going blocks as
 \begin{equation}
     M
     =
@@ -170,10 +175,11 @@ $\tilde{i}^{(-)}=\{ \tilde{i}^{(-)}(1),\dots,\tilde{i}^{(-)}(\tilde{N}_-)\}\subs
 
 \subsection{Exact projection equations}\label{sec:exact}
 
-Definitions~\ref{def:proj_mat} and~\ref{def:proj_eq} introduce the exact projection matrix and its associated one-way equations, while Proposition~\ref{prop:projection-consistent-2} provides conditions under which the global equation~\eqref{eq:HyperbolicPDE_D_char_freq} can be solved using two one-way equations and Proposition~\ref{prop:projection-consistent} shows that the sum of the two one-way solutions are always solution to the global equation (OWNS-O does not have this property~\cite{Towne_2015_OWNS-O}).
+\response{This section presents the one-way approximations to~\eqref{eq:HyperbolicPDE_D_char_freq} developed in Towne et al.~\cite{Towne_2022_OWNS-P}, which enables it to be solved as a spatial initial value problem in $x$. Definition~\ref{def:proj_mat} introduces a projection matrix $P$, used in Definition~\ref{def:proj_eq} to define the one-way equations for left- and right-going modes. Proposition~\ref{prop:projection-consistent-2} (Towne et al.~\cite{Towne_2022_OWNS-P}) shows that~\eqref{eq:HyperbolicPDE_D_char_freq} can be solved exactly using the two one-way equations~\eqref{eq:lowns} if and only if $\partial_x P = 0$. Nevertheless, as discussed in Towne et al., these one-way equations can accurately model disturbance evolution in spatially-developing flows (e.g., boundary layers and jets) even when $\partial_x P \neq 0$, because the flow varies slowly in $x$ and predominantly evolves in a single direction (i.e., either the left- or right-going mode dominates).
+}
 
-\begin{definition}\label{def:proj_mat}
-We define the one-way projection matrix
+\begin{definition}[Towne et al.~\cite{Towne_2022_OWNS-P}]\label{def:proj_mat}
+The projection matrix
 \begin{equation}
 P = V E V^{-1},\quad E=\begin{bmatrix}
     I_{++} & 0\\
@@ -181,16 +187,16 @@ P = V E V^{-1},\quad E=\begin{bmatrix}
 \end{bmatrix}
 %\label{eq:projectionOp}
 \end{equation}
-which partitions the solution into right- and left-going components as $\hat{\bm{\phi}}'=P\hat{\bm{\phi}}=V_+\psi_+$ and $\hat{\bm{\phi}}''=[I-P]\hat{\bm{\phi}}=V_-\hat{\bm{\psi}}$, respectively, where $I_{++}\in\mathbb{R}^{N_+\times N_+}$ is the identity.
+partitions $\hat{\bm{\phi}}$ into right- and left-going components as $\hat{\bm{\phi}}'=P\hat{\bm{\phi}}=V_+\psi_+$ and $\hat{\bm{\phi}}''=[I-P]\hat{\bm{\phi}}=V_-\hat{\bm{\psi}}$, respectively, where $I_{++}\in\mathbb{R}^{N_+\times N_+}$ is the identity.
 \end{definition}
-\begin{proposition}
-    $P$ is a projection matrix~\cite{Towne_2022_OWNS-P}.
+\begin{proposition}[Towne et al.~\cite{Towne_2022_OWNS-P}]
+    $P$ is a projection matrix.
 \end{proposition}
 \begin{proof}
     $E^2=E$ so that $P^2=VEV^{-1}VEV^{-1}=VEV^{-1}=P$.
 \end{proof}
-\begin{proposition}
-    $P$ commutes with $M$~\cite{Towne_2022_OWNS-P}.
+\begin{proposition}[Towne et al.~\cite{Towne_2022_OWNS-P}]
+    $P$ commutes with $M$.
     \label{prop:commutativity}
 \end{proposition}
 \begin{proof}
@@ -217,7 +223,7 @@ which partitions the solution into right- and left-going components as $\hat{\bm
 %     \end{subequations}
 %     respectively.
 % \end{definition}
-\begin{definition}[Exact one-way projection equations~\cite{Towne_2022_OWNS-P}]\label{def:proj_eq}
+\begin{definition}[Exact one-way projection equations; Towne et al.~\cite{Towne_2022_OWNS-P}]\label{def:proj_eq}
 The projection matrix $P$ yields the one-way equations for right- and left-going modes:
 \begin{subequations}
 \begin{align}
@@ -235,47 +241,38 @@ The projection matrix $P$ yields the one-way equations for right- and left-going
 \end{definition}
 
 
-\begin{proposition} The exact one-way projection equations are well-posed as spatial initial value problems according to the criterion of Kreiss~\cite{Kreiss_1970_IBVP}.
+\begin{proposition}[Towne et al.~\cite{Towne_2022_OWNS-P}] The exact one-way projection equations are well-posed as spatial initial value problems according to the criterion of Kreiss~\cite{Kreiss_1970_IBVP}.
 \end{proposition}
 \begin{proof}
     See the discussion by Towne and Colonius~\cite{Towne_2015_OWNS-O} and Towne et al.~\cite{Towne_2022_OWNS-P}, the criterion developed by Kreiss~\cite{Kreiss_1970_IBVP}, and the review of this criterion by Higdon~\cite{Higdon_1986_Kreiss}.
 \end{proof}
 
-\begin{proposition}\label{prop:projection-consistent-2}
+\begin{proposition}[Towne et al.~\cite{Towne_2022_OWNS-P}]\label{prop:projection-consistent-2}
     If $\hat{\bm{\phi}}$ satisfies~\eqref{eq:HyperbolicPDE_D_char_freq} with $\hat{\bm{\phi}}(x_L)=\hat{\bm{\phi}}_L$ and $\hat{\bm{\phi}}(x_R)=\hat{\bm{\phi}}_R$,    
-    then $P\hat{\bm{\phi}}$ and $[I-P]\hat{\bm{\phi}}$ satisfy~\eqref{eq:lowns1} and~\eqref{eq:lowns2} with $\hat{\bm{\phi}}'(x_L)=P\hat{\bm{\phi}}_L$ and $\hat{\bm{\phi}}''(x_R)=[I-P]\hat{\bm{\phi}}_R$ if and only if $[I-P]\partial \bm{\phi}' / \partial x=0$ and $P \partial \bm{\phi}'' / \partial x=0$.
+    then $P\hat{\bm{\phi}}$ and $[I-P]\hat{\bm{\phi}}$ satisfy~\eqref{eq:lowns1} and~\eqref{eq:lowns2} with $\hat{\bm{\phi}}'(x_L)=P\hat{\bm{\phi}}_L$ and $\hat{\bm{\phi}}''(x_R)=[I-P]\hat{\bm{\phi}}_R$ if and only if $\partial P/\partial x=0$\response{~\cite{Towne_2022_OWNS-P}}.
 \end{proposition}
 \begin{proof}
-    Pre-multiply~\eqref{eq:HyperbolicPDE_D_char_freq} by $P$ and $[I-P]$ to obtain
-    \begin{align*}
-    P \frac{\partial (P\hat{\bm{\phi}})}{\partial x} + P \frac{\partial ([I-P]\hat{\bm{\phi}})}{\partial x} 
-    &= P [M \hat{\bm{\phi}}' + \hat{\bm{g}}],\\
-    [I-P] \frac{\partial (P\hat{\bm{\phi}})}{\partial x} + [I-P] \frac{\partial ([I-P]\hat{\bm{\phi}})}{\partial x} 
-    &= [I-P] [M \hat{\bm{\phi}}'' + \hat{\bm{g}}].
-    \end{align*}
-    If $[I-P]\partial \bm{\phi}' / \partial x=0$ and $P \partial \bm{\phi}'' / \partial x=0$, then we obtain~\eqref{eq:lowns1} and~\eqref{eq:lowns2}, respectively, with stated boundary conditions. Otherwise, we do not recover~\eqref{eq:lowns1} and~\eqref{eq:lowns2}.
+    \response{See Towne et al.~\cite{Towne_2022_OWNS-P}.}
 \end{proof}
 
-\begin{proposition}\label{prop:projection-consistent}
-If $\hat{\bm{\phi}}'$ and $\hat{\bm{\phi}}''$ satisfy~\eqref{eq:lowns1} and~\eqref{eq:lowns2} with 
-$\hat{\bm{\phi}}'(x_L)=\hat{\bm{\phi}}_L'$ and $\hat{\bm{\phi}}''(x_R)=\hat{\bm{\phi}}_R''$, 
-then $\hat{\bm{\phi}}'+\hat{\bm{\phi}}''$ satisfies~\eqref{eq:HyperbolicPDE_D_char_freq} with 
-$\hat{\bm{\phi}}(x_L) = \hat{\bm{\phi}}_L'+ \hat{\bm{\phi}}''_L$ 
-and $\hat{\bm{\phi}}(x_R) = \hat{\bm{\phi}}'_R + \hat{\bm{\phi}}''_R$.
-\end{proposition}
-\begin{proof}
-Summing~\eqref{eq:lowns1} and~\eqref{eq:lowns2} gives $\partial(\hat{\bm{\phi}}'+\hat{\bm{\phi}}'')/\partial x=M[\hat{\bm{\phi}}'+\hat{\bm{\phi}}'']+\hat{\bm{g}}$, showing that $\hat{\bm{\phi}}'+\hat{\bm{\phi}}''$ satisfies~\eqref{eq:HyperbolicPDE_D_char_freq} 
-with the stated boundary conditions.
-\end{proof}
-
-Proposition~\ref{prop:projection-consistent} shows that, unlike OWNS-O~\cite{Towne_2015_OWNS-O}, solutions to the one-way projection equations~\eqref{eq:lowns} are also solutions to the global equations~\eqref{eq:HyperbolicPDE_D_char_freq}. As discussed by Towne et al.~\cite{Towne_2022_OWNS-P}, disturbance evolution in spatially-developing fluid flows (e.g., boundary layers and jets) can be modeled using one-way equations, even though the conditions of Proposition~\eqref{prop:projection-consistent-2} do not hold (all of $\partial P/\partial x$, $\bm{\phi}'$, and $\bm{\phi}''$ are non-zero), because the flow evolves slowly in $x$ and the disturbances propagate primarily in one direction so that both $\partial P/\partial x$ and $\hat{\bm{\phi}}''$ are small.
+% \begin{proposition}\label{prop:projection-consistent}
+% If $\hat{\bm{\phi}}'$ and $\hat{\bm{\phi}}''$ satisfy~\eqref{eq:lowns1} and~\eqref{eq:lowns2} with 
+% $\hat{\bm{\phi}}'(x_L)=\hat{\bm{\phi}}_L'$ and $\hat{\bm{\phi}}''(x_R)=\hat{\bm{\phi}}_R''$, 
+% then $\hat{\bm{\phi}}'+\hat{\bm{\phi}}''$ satisfies~\eqref{eq:HyperbolicPDE_D_char_freq} with 
+% $\hat{\bm{\phi}}(x_L) = \hat{\bm{\phi}}_L'+ \hat{\bm{\phi}}''_L$ 
+% and $\hat{\bm{\phi}}(x_R) = \hat{\bm{\phi}}'_R + \hat{\bm{\phi}}''_R$.
+% \end{proposition}
+% \begin{proof}
+% Summing~\eqref{eq:lowns1} and~\eqref{eq:lowns2} gives $\partial(\hat{\bm{\phi}}'+\hat{\bm{\phi}}'')/\partial x=M[\hat{\bm{\phi}}'+\hat{\bm{\phi}}'']+\hat{\bm{g}}$, showing that $\hat{\bm{\phi}}'+\hat{\bm{\phi}}''$ satisfies~\eqref{eq:HyperbolicPDE_D_char_freq} 
+% with the stated boundary conditions.
+% \end{proof}
 
 
 \subsection{Approximate projection using OWNS-P}~\label{subsec:OWNSP}
-Definition~\ref{def:filter-p} introduces the OWNS-P filter, while Proposition~\ref{prop:proj} recasts it in a matrix form, which we show to be a projection in Proposition~\ref{prop:approxProjectProjectMat}. Proposition~\ref{prop:approxProjectConvergence} provides a criterion for filter convergence, while Proposition~\ref{prop:minimalOWNS-P} provides a necessary and sufficient condition for convergent recursion parameters to exist. We bound the error introduced by this approximation in Proposition~\ref{prop:errOWNSP}, while Proposition~\ref{prop:commMatOWNS-P} shows that unlike the exact projection matrix, the approximate projection matrix does not commute with $M$, unless the approximation is fully converged.
+Definition~\ref{def:filter-p} introduces the OWNS-P filter, while Proposition~\ref{prop:proj} recasts it in a matrix form, which is shown to be a projection in Proposition~\ref{prop:approxProjectProjectMat}. Proposition~\ref{prop:approxProjectConvergence} provides a criterion for filter convergence, while Proposition~\ref{prop:minimalOWNS-P} provides a necessary and sufficient condition for convergent recursion parameters to exist. We bound the error introduced by this approximation in Proposition~\ref{prop:errOWNSP}, while Proposition~\ref{prop:commMatOWNS-P} shows that unlike the exact projection matrix, the approximate projection matrix does not commute with $M$, unless the approximation is fully converged.
 
 
-\begin{definition}[OWNS-P filter]\label{def:filter-p}
+\begin{definition}[OWNS-P filter; Towne et al.~\cite{Towne_2022_OWNS-P}]\label{def:filter-p}
     Given the solution $\hat{\bm{\phi}}$, OWNS-P returns the filtered solution $\hat{\bm{\phi}}^0$ by solving
     \begin{subequations}
     \begin{align}
@@ -287,9 +284,9 @@ Definition~\ref{def:filter-p} introduces the OWNS-P filter, while Proposition~\r
     \end{align}
     \label{eq:filter-p}
     \end{subequations}
-    using the recursion parameters $\{\beta_+^j,\beta_-^j\}_{j=0}^{N_\beta-1}$ and auxiliary variables $\{\hat{\bm{\phi}}^j\}_{j=0}^{N_\beta}$~\cite{Towne_2022_OWNS-P}.
+    using the recursion parameters $\{\beta_+^j,\beta_-^j\}_{j=0}^{N_\beta-1}$ and auxiliary variables \response{$\{\hat{\bm{\phi}}^j\}_{j=-N_\beta}^{N_\beta}$}.
 \end{definition}
-\begin{proposition}\label{prop:proj} The recursive filter~\eqref{eq:filter-p} can be recast in matrix form
+\begin{proposition}[Towne et al.~\cite{Towne_2022_OWNS-P}]\label{prop:proj} The recursive filter~\eqref{eq:filter-p} can be recast in matrix form
 \begin{subequations}
     \begin{equation}
     P_{N_\beta}
@@ -323,8 +320,8 @@ Definition~\ref{def:filter-p} introduces the OWNS-P filter, while Proposition~\r
     See Towne et al.~\cite{Towne_2022_OWNS-P}.
 \end{proof}
 
-\begin{proposition}\label{prop:approxProjectProjectMat}
-$P_{N_\beta}$ is a projection matrix~\cite{Towne_2016_Thesis}.
+\begin{proposition}[Towne~\cite{Towne_2016_Thesis}]\label{prop:approxProjectProjectMat}
+$P_{N_\beta}$ is a projection matrix.
 \end{proposition}
 \begin{proof}
 $P_{N_\beta}^2
@@ -332,7 +329,7 @@ $P_{N_\beta}^2
 =P_{N_\beta}$.
 \end{proof}
 
-\begin{proposition}\label{prop:approxProjectConvergence} $P_{N_\beta}\to P$ if and only if
+\begin{proposition}[Towne et al.~\cite{Towne_2022_OWNS-P}]\label{prop:approxProjectConvergence} $P_{N_\beta}\to P$ if and only if
     \begin{equation}
     \lim_{N_\beta\to\infty}
     \prod_{j=0}^{N_\beta-1}\frac{|\alpha_m-\beta_{+}^{j}|}
@@ -346,7 +343,7 @@ $P_{N_\beta}^2
     See Towne et al.~\cite{Towne_2022_OWNS-P}.
 \end{proof}
 
-\begin{proposition}\label{prop:minimalOWNS-P}
+\begin{proposition}[Towne et al.~\cite{Towne_2022_OWNS-P}]\label{prop:minimalOWNS-P}
 \begin{subequations}
     Recursion parameters such that $P_{N_\beta}\to P$ exist if and only if $\alpha_m\neq\alpha_n$ for all $(m,n)\in i^{(+)}\times i^{(-)}$. If $\tilde{N}_+\leq \tilde{N}_-$, then take $N_\beta=\tilde{N}_+$ with
     \begin{equation}
@@ -365,46 +362,11 @@ $P_{N_\beta}^2
 \end{subequations}
 \end{proposition}
 \begin{proof}
-    If there exists $(\hat{m},\hat{n})\in i^{(+)}\times i^{(-)}$ such that $\alpha_{\hat{m}}=\alpha_{\hat{n}}$, then
-    \[
-    R_{\hat{n}\hat{m}}
-    =
-    \prod_{j=0}^{N_\beta-1}\frac{\alpha_{\hat{m}}-\beta_{+}^{j}}{\alpha_{\hat{m}}-\beta_-^j}\frac{\alpha_{\hat{n}}-\beta_{-}^{j}}{\alpha_{\hat{n}}-\beta_+^j}
-    (V_{--}^{-1}V_{-+})_{\hat{n}\hat{m}}
-    =
-    (V_{--}^{-1}V_{-+})_{\hat{n}\hat{m}}
-    \neq 0
-    \]
-    so that $R_{N_\beta}^{-1}\neq I$ for any choice of recursion parameters.
-
-    Next assume that $\alpha_m\neq\alpha_n$ for all $(m,n)\in i^{(+)}\times i^{(-)}$, and note that
-    \[
-    \max_{(m,n)\in i^{(+)}\times i^{(-)}}\prod_{j=0}^{N_\beta-1}\frac{|\alpha_m-\beta_{+}^{j}|}
-    {|\alpha_m-\beta_-^j|}
-    \frac{|\alpha_n-\beta_{-}^{j}|}
-    {|\alpha_n-\beta_+^j|}=\|F_{++}\|\|F_{--}^{-1}\|,
-    \]
-    so that by Proposition~\ref{prop:approxProjectConvergence}, $P_{N_\beta}\to P$ when $\|F_{++}\|\|F_{--}^{-1}\|=0$. If $\tilde{N}_+\leq \tilde{N}_-$, we use~\eqref{eq:owns-p-params_plus} to obtain $\|F_{++}\|=0$ since $\alpha_m\in\{\beta_j\}_{j=0}^{N_\beta-1}$ and $\alpha_m\notin\{\beta_j\}_{j=0}^{N_\beta-1}$ for all $m \in i^{(+)}$. If $\tilde{N}_- < \tilde{N}_+$, we use~\eqref{eq:owns-p-params_minus} to obtain $\|F_{--}^{-1}\|=0$ since $\alpha_n\in\{\beta_-^j\}_{j=0}^{N_\beta-1}$ and $\alpha_n\notin\{\beta_+^j\}_{j=0}^{N_\beta-1}$ for all $n\in i^{(-)}$.
+    \response{See Towne et al.~\cite{Towne_2022_OWNS-P} or Appendix~\ref{app:Proofs}.}
 \end{proof}
 
-Proposition~\ref{prop:errBoundTriangle} bounds $\|E-R_{N_\beta}^{-1}ER_{N_\beta}\|$, while Proposition~\ref{prop:errOWNSP} uses this result to bound $\|P-P_{N_\beta}\|$ for small $\|F_{++}\|\|F_{--}^{-1}\|$.
 
-\begin{proposition}\label{prop:errBoundTriangle}
-    The norm of $E-R_{N_\beta}ER_{N_\beta}^{-1}$ can be bounded
-    \begin{align}
-    \begin{split}
-        \|E-R_{N_\beta}ER_{N_\beta}^{-1}\|&\leq \|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|\\
-        &\big(
-        2\|F_{++}\|^2\|F_{--}^{-1}\|^2\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|\\
-        &+\|F_{++}\|\|F_{--}^{-1}\|\|V_{++}^{-1}V_{+-}\|+\|F_{++}\|\|F_{--}^{-1}\|\|V_{--}^{-1}V_{-+}\|\|
-        \big).
-    \end{split}
-    \label{eq:errBoundTriangleFinal}
-    \end{align}
-\end{proposition}
-\begin{proof}
-    See Appendix~\eqref{app:Proofs}
-\end{proof}
+\response{Proposition~\ref{prop:errOWNSP} bounds the error in the OWNS-P approximation, $\|P-P_{N_\beta}\|$, for small $\|F_{++}\|\|F_{--}^{-1}\|$. We use this error bound to define our objective function for the subset selection problem~\eqref{eq:subsetSelection}.}
 
 \begin{proposition}\label{prop:errOWNSP}
     If $\|F_{++}\|\|F_{--}^{-1}\|<\epsilon$ where
@@ -419,25 +381,7 @@ Proposition~\ref{prop:errBoundTriangle} bounds $\|E-R_{N_\beta}^{-1}ER_{N_\beta}
     \end{equation}
 \end{proposition}
 \begin{proof}
-    By the triangle inequality
-    \[
-    \|\sum_{k=0}^\infty(F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^k\|\leq \sum_{k=0}^\infty a^k
-    \]
-    for $a=\|F_{++}\|^2\|F_{--}^{-1}\|^2\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|$, so that the Neumann series converges if $a<1$, or $\|F_{++}\|\|F_{--}^{-1}\|<(\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|)^{-1/2}$. For $\|F_{++}\|\|F_{--}^{-1}\|<\epsilon$, with $\epsilon$ as in~\eqref{eq:errBoundEpsilon}, we obtain
-    \[
-        \|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|\leq1+\mathcal{O}(\epsilon^2).
-    \]
-    so that using~\eqref{eq:errBoundTriangleFinal} from Proposition~\eqref{prop:errBoundTriangle} yields
-    \begin{equation}
-        \|E-R_{N_\beta}ER_{N_\beta}^{-1}\|\leq
-        \|F_{++}\|\|F_{--}^{-1}\|\big(\|V_{++}^{-1}V_{+-}\|+\|V_{--}^{-1}V_{-+}\|\big)+\mathcal{O}(\epsilon^2).
-        \label{eq:errBoundNeumann}
-    \end{equation}
-    Finally, the induced Euclidean norm of a matrix is sub-multiplicative so that
-    \[
-    \|P-P_{N_\beta}\|\leq \|V\| \|E-R_{N_\beta}ER_{N_\beta}^{-1}\| \|V^{-1}\|,
-    \]
-    which yields~\eqref{eq:errOWNSP} when combined with~\eqref{eq:errBoundNeumann}.
+    See Appendix~\ref{app:Proofs}.
 \end{proof}
 
 \begin{proposition}~\label{prop:greedy-p}
@@ -469,14 +413,14 @@ Proposition~\ref{prop:errOWNSP} shows that the error $\|P_{N_\beta}-P\|$ scales 
 \end{remark}
 
 \begin{proposition}\label{prop:commMatOWNS-P}
-    $P_{N_\beta}$ commutes with $M$ if and only if $R_{N_\beta}^{-1}=I$.
+    \response{$P_{N_\beta}$ commutes with $M$ if and only if $\|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|\to0$ and $\|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|\to0$.}
 \end{proposition}
 \begin{proof}
-    If $R_{N_\beta}^{-1}=I$, then $P_{N_\beta}M=PM=MP=MP_{N_\beta}$. If $R_{N_\beta}^{-1}\neq I$, then $R_{N_\beta}^{-1}D\neq D R_{N_\beta}$, and $P_{N_\beta}$ does not commute with $M$.
+    \response{If $\|F_{++}V_{++}^{-1}V_{+-}F_{--}^{-1}\|\to0$ and $\|F_{--}^{-1}V_{--}^{-1}V_{-+}F_{++}\|\to0$, then $R_{N_\beta}^{-1}\to I$ and $P_{N_\beta}M=PM=MP=MP_{N_\beta}$. Otherwise, $R_{N_\beta}^{-1}D\neq D R_{N_\beta}$, and $P_{N_\beta}$ does not commute with $M$.}
 \end{proof}
 
 \begin{remark}
-Proposition~\ref{prop:approxProjectProjectMat} establishes that $P_{N_\beta}$ is always a projection matrix, while Proposition~\ref{prop:commMatOWNS-P}, in conjunction with Proposition~\ref{prop:approxProjectConvergence}, shows that although $P_{N_\beta}$ approximates $P$, it only commutes with $M$ if the approximation is fully converged.
+Proposition~\ref{prop:approxProjectProjectMat} establishes that $P_{N_\beta}$ is always a projection matrix, while Proposition~\ref{prop:commMatOWNS-P}, in conjunction with Proposition~\ref{prop:approxProjectConvergence}, shows that although $P_{N_\beta}$ approximates $P$, it only commutes with $M$ if the approximation is fully converged. \response{Towne~\cite{Towne_2016_Thesis} proves that OWNS-P yields a projection matrix, but does not discuss whether it commutes with $M$. Similarly, Zhu and Towne~\cite{Zhu_2021_OWNS-R} demonstrate that OWNS-P approximates the eigenvectors in $P$, while OWNS-R approximates the eigenvalues, yet they do not address whether these approximations commute with $M$ or form projection operators.}
 \end{remark}
 
 % \begin{proposition}\label{prop:errCommP}
@@ -503,7 +447,7 @@ Proposition~\ref{prop:approxProjectProjectMat} establishes that $P_{N_\beta}$ is
 
 OWNS-R constructs approximations to $P$ with a reduced computational cost relative to OWNS-P. Definition~\ref{def:filter-r} presents the OWNS-R recursive filter, which is recast in matrix form in Proposition~\ref{prop:owns-r-implementation}. In contrast to OWNS-P, Proposition~\ref{prop:projMatOWNS-R} shows that the resulting matrix is not generally a projection matrix, while Proposition~\ref{prop:commMatOWNS-R} shows that it always commutes with $M$. Proposition~\ref{prop:OWNS-R-converge} provides a criterion for convergence, while Proposition~\ref{prop:minimalOWNS-R} provides a necessary and sufficient condition for convergent parameters to exist. While Zhu and Towne~\cite{Zhu_2021_OWNS-R} suggested that OWNS-R convergence can be guaranteed using the same recursion parameters as OWNS-P, we show in Proposition~\ref{prop:minimalOWNS-R-false} that this is not true. In addition, Proposition~\ref{prop:owns-r-repeat-blowup} shows that repeated applications of the OWNS-R matrix leads to unbounded growth or decay unless the filter is fully converged.
 
-\begin{definition}[OWNS-R filter]\label{def:filter-r}
+\begin{definition}[OWNS-R filter; Zhu and Towne~\cite{Zhu_2021_OWNS-R}]\label{def:filter-r}
     Given the solution $\hat{\bm{\phi}}$, OWNS-R returns the filtered solution $\hat{\bm{\phi}}^{N_\beta}$ by solving
     \begin{subequations}
         \begin{align}
@@ -521,10 +465,10 @@ OWNS-R constructs approximations to $P$ with a reduced computational cost relati
             +c\prod_{j=1}^{N_\beta}(\alpha-\beta^j_+),
             \label{eq:owns-r-polynomial}
         \end{equation}
-    for freely-chosen $c\geq0$ (see Remark~\ref{rmk:owns-r-c} for more information on choosing $c$). Note that $\{\beta^j_*\}_{j=1}^{N_\beta}$ and $h$ must be computed numerically (e.g., via \texttt{roots} in MATLAB)~\cite{Zhu_2021_OWNS-R}.
+    for freely-chosen $c\geq0$ (see Remark~\ref{rmk:owns-r-c} for more information on choosing $c$). Note that $\{\beta^j_*\}_{j=1}^{N_\beta}$ and $h$ must be computed numerically (e.g., via \texttt{roots} in MATLAB).
 \end{definition}
 
-\begin{proposition}\label{prop:owns-r-implementation}
+\begin{proposition}[Zhu and Towne~\cite{Zhu_2021_OWNS-R}]\label{prop:owns-r-implementation}
     The recursive filter~\eqref{eq:filter-r} can be recast in matrix form
     \begin{equation}
         P^{(R)}_{N_{\beta}}
@@ -561,7 +505,7 @@ OWNS-R constructs approximations to $P$ with a reduced computational cost relati
 $P^{(R)}_{N_\beta}M=VE_{N_\beta}DV^{-1}=VDE_{N_\beta}V^{-1}=MP^{(R)}_{N_\beta}$ since $E_{N_\beta}$ and $D$ are diagonal matrices.
 \end{proof}
 
-\begin{proposition}\label{prop:OWNS-R-converge}
+\begin{proposition}[Zhu and Towne~\cite{Zhu_2021_OWNS-R}]\label{prop:OWNS-R-converge}
 $P_{N_\beta}^{(R)}\to P$ if and only if $E_{N_\beta}^{(m)}\to 1$ for all $m\in i^{(+)}$ and $E_{N_\beta}^{(n)}\to0$ for all $n\in i^{(-)}$.
 \end{proposition}
 \begin{proof}
@@ -609,7 +553,7 @@ Taking $N_\beta=N$ with parameters~\eqref{eq:OWNS-R-params} guarantees that $\al
 \end{proof}
 
 
-\begin{proposition}\label{prop:errOWNSR}
+\begin{proposition}[Zhu and Towne~\cite{Zhu_2021_OWNS-R}]\label{prop:errOWNSR}
     The error introduced by OWNS-R is bounded by
     \begin{equation}
         \|P-P_{N_\beta}^{(R)}\|\leq
@@ -648,11 +592,11 @@ Proposition~\ref{prop:projMatOWNS-R} shows that $P_{N_\beta}^{(R)}$ is not gener
 \end{remark}
 
 \begin{remark}~\label{rmk:rounding}
-    In theory, the OWNS-R error decreases with increasing $N_\beta$ if both $\|F_{++}\|$ and $\|F_{--}^{-1}\|$ decrease. In practice, we observe that for sufficiently large $N_\beta$, rounding errors due to finite precision arithmetic prevent the OWNS-R filter from converging. We note that solving~\eqref{eq:filter-r} can introduce rounding errors for large $N_\beta$, while Appendix~\ref{app:Rounding} discusses how computing $\beta_j^*$ numerically (e.g., via \texttt{roots} in MATLAB) introduces rounding errors that increase as a function of $N_\beta$.
+    In theory, the OWNS-R error decreases with increasing $N_\beta$ if both $\|F_{++}\|$ and $\|F_{--}^{-1}\|$ decrease. In practice, we observe that for sufficiently large $N_\beta$, rounding errors due to finite precision arithmetic prevent the OWNS-R filter from converging. \response{This error can partially be mitigated by computing $\{\beta_*^j\}_{j=1}^{N_\beta}$ to quad, rather than double precision~\cite{Zhu_2021_OWNS-R}, but error associated with applying the filter persists. We compute $\{\beta_*^j\}_{j=1}^{N_\beta}$ to quad precision in Section 5, while we use double precision in Section 6 because $N_\beta$ is small enough that quad precision is unnecessary.}
 \end{remark}
 
 \begin{remark}
-    OWNS-R was developed to yield a lower computational cost than OWNS-P (and OWNS-O). We refer to Zhu and Towne~\cite{Zhu_2021_OWNS-R} for a more detailed discussion of computational cost of OWNS-P and OWNS-R.
+    \response{Despite its slower convergence and rounding errors for large $N_\beta$, OWNS-R is advantageous because it entails a lower computational cost than OWNS-P and scales better for large systems of equations~\cite{Zhu_2021_OWNS-R}.} We refer to Zhu and Towne~\cite{Zhu_2021_OWNS-R} for a more detailed discussion of computational cost of OWNS-P and OWNS-R.
 \end{remark}
 
 
@@ -667,108 +611,104 @@ Whereas OWNS-P yields a projection matrix that generally does not commute with $
 
 \section{Greedy algorithm for recursion parameter selection}\label{sec:greedy}
 
-If $\alpha_m \neq \alpha_n$ for all $(m,n) \in i^{(+)}\times i^{(-)}$, then Propositions~\ref{prop:minimalOWNS-P} and~\ref{prop:minimalOWNS-R} identify recursion parameter sets that ensure convergence. However, these sets are large, leading to large linear systems of equations~\eqref{eq:filter-p} for OWNS-P, while OWNS-R suffers from rounding errors in computing $\beta_{j}^{*}$, which renders its filter~\eqref{eq:filter-r} inaccurate. To overcome this challenge, previous work has used \textit{heuristic} estimates of key eigenvalues to obtain stable and accurate approximation with $N_\beta\ll N$. However, this requires problem-specific trial-and-error parameter tuning and leads to slow convergence. Therefore, we propose an optimization procedure to automatically choose recursion parameters that ensure rapid filter convergence.
+If $\alpha_m \neq \alpha_n$ for all $(m,n) \in i^{(+)}\times i^{(-)}$, then
+Propositions~\ref{prop:minimalOWNS-P} and~\ref{prop:minimalOWNS-R} identify
+recursion parameter sets that guarantee convergence. However, these sets are
+large: OWNS-P requires solving the linear systems~\eqref{eq:filter-p}, while the
+OWNS-R filter~\eqref{eq:filter-r} becomes increasingly sensitive to rounding
+errors as $N_\beta$ grows. \response{In addition, previous work~\cite{Towne_2015_OWNS-O,Towne_2022_OWNS-P,Zhu_2021_OWNS-R} has avoided computing the eigenvalues of $M$ due to its relatively high computational cost.} Consequently, previous work has relied on \textit{heuristic} estimates of key eigenvalues to construct stable and accurate OWNS approximations with $N_\beta \ll N$. This approach has two drawbacks: it requires problem-specific parameter tuning and typically yields slow convergence. \response{In contrast to previous work, we choose to accept the computational cost of computing the eigenvalues of $M$, with the goal of using this information to choose parameters that converge faster, thus reducing the net cost of OWNS.}
 
-We requires the following ingredients: (i) an objective function to assess recursion parameter performance, (ii) candidate recursion parameters, and (iii) an optimization routine. We will use the error bounds from Propositions~\ref{prop:errOWNSP} and~\ref{prop:errOWNSR} to obtain objective functions, which we will minimize for fixed $N_\beta\ll N$ using a greedy algorithm to select a sparse subset of the eigenvalues of $M$ as our recursion parameter set.
+\response{
+In the present work, we formulate an optimization problem that enables automatic
+recursion parameter selection with rapid error convergence. Let
+\begin{equation}
+    \mathcal{S}_+ = \{ \alpha_+^{m} \mid m = 1,\dots,\tilde{N}_+\},\quad
+    \mathcal{S}_- = \{ \alpha_-^{n} \mid n = 1,\dots,\tilde{N}_-\},
+\end{equation}
+denote the sets of right- and left-going eigenvalues. Propositions~\ref{prop:minimalOWNS-P} and~\ref{prop:minimalOWNS-R} guarantee the
+existence of subsets $\{\beta_+^j\}_{j=1}^{k} \subset \mathcal{S}_+$ and
+$\{\beta_-^j\}_{j=1}^{k} \subset \mathcal{S}_-$
+such that the OWNS approximations converge, with
+$k=\min\{\tilde{N}_-,\tilde{N}_+\}$ for OWNS-P and $k=\tilde{N}_-+\tilde{N}_+$ for OWNS-R. 
+For $N_\beta \ll N$, we formulate a \textit{subset selection} problem: select
+$\{\beta_+^j\}_{j=1}^{N_\beta} \subset \mathcal{S}_+$ and
+$\{\beta_-^j\}_{j=1}^{N_\beta} \subset \mathcal{S}_-$ to minimize the error in the
+OWNS approximations. Subset selection is NP-hard~\cite{Natarajan_1995_OptimalSubset} 
+and cannot be solved in polynomial time. Following Das and Kempe (2011)~\cite{Das_2011_Greedy}, we
+apply a greedy algorithm to solve the subset selection problem, using the error
+bounds from Propositions~\ref{prop:errOWNSP} and~\ref{prop:errOWNSR} as the
+objective functions.}
 
+\subsection{Greedy subset selection}
 
-\subsection{Objective function}
-
-We define the recursion parameter set $\Xi_{N_{\beta}}\equiv\{\beta_+^j,\beta_-^j\}_{j=1}^{N_\beta}$ and the functions
+\response{
+We define the recursion parameter subsets
+$\Xi_{N_\beta}^{+} \equiv \{\beta_+^j\}_{j=1}^{N_\beta} \subset \mathcal{S}_+$ and
+$\Xi_{N_\beta}^{-} \equiv \{\beta_-^j\}_{j=1}^{N_\beta} \subset \mathcal{S}_-$,
+and the functions
 \begin{subequations}
 \begin{equation}
-    \hat{\mathcal{J}}_+(\alpha;\Xi_{N_{\beta}})\equiv
-    \prod_{j=1}^{N_{\beta}}
-    \frac{|\alpha-\beta_{+}^{j}|}{|\alpha-\beta_-^j|},\quad
-    \hat{\mathcal{J}}_-(\alpha;\Xi_{N_{\beta}})\equiv
-    \prod_{j=1}^{N_{\beta}}
-    \frac{|\alpha-\beta_{-}^{j}|}{|\alpha-\beta_+^j|},
+\hat{\mathcal{J}}_+(\alpha;\Xi_{N_\beta}^{+},\Xi_{N_\beta}^{-}) \equiv
+\prod_{j=1}^{N_\beta} \frac{|\alpha - \beta_+^j|}{|\alpha - \beta_-^j|}, \quad
+\hat{\mathcal{J}}_-(\alpha;\Xi_{N_\beta}^{+},\Xi_{N_\beta}^{-}) \equiv
+\prod_{j=1}^{N_\beta} \frac{|\alpha - \beta_-^j|}{|\alpha - \beta_+^j|}.
 \end{equation}
-so that by Proposition~\ref{prop:errOWNSP} the OWNS-P error scales as
+By Proposition~\ref{prop:errOWNSP}, the OWNS-P error scales as
 \begin{equation}
-\mathcal{J}(\Xi_{N_{\beta}})
+\mathcal{J}(\Xi_{N_\beta}^{+},\Xi_{N_\beta}^{-})
 \equiv
-\max_{m\in i^{(+)}}
-\hat{\mathcal{J}}_+(\alpha_m;\Xi_{N_{\beta}})
-\max_{m\in i^{(-)}}
-\hat{\mathcal{J}}_-(\alpha_n;\Xi_{N_{\beta}})
-=\|F_{++}\|\|F_{--}^{-1}\|,
+\max_{\alpha\in\mathcal{S}_+} \hat{\mathcal{J}}_+(\alpha;\Xi_{N_\beta}^{+},\Xi_{N_\beta}^{-})
+\;\max_{\alpha\in\mathcal{S}_-}\hat{\mathcal{J}}_-(\alpha;\Xi_{N_\beta}^{+},\Xi_{N_\beta}^{-}),
 \label{eq:objFncRecursions}
 \end{equation}
-while by Proposition~\ref{prop:errOWNSR} the OWNS-R error scales as
-\begin{align}
-\begin{split}
-\mathcal{J}^{(R)}(\Xi_{N_{\beta}})
-&\equiv
-\max\big\{
-\max_{m\in i^{(+)}}\hat{\mathcal{J}}_+(\alpha_m;\Xi_{N_{\beta}}),
-\max_{n\in i^{(-)}}\hat{\mathcal{J}}_-(\alpha_n;\Xi_{N_{\beta}})
-\big\}\\
-&=
-\max\big\{\|F_{++}\|,\|F_{--}^{-1}\|\big\}.
-\end{split}
+and by Proposition~\ref{prop:errOWNSR}, the OWNS-R error scales as
+\begin{equation}
+\mathcal{J}^{(R)}(\Xi_{N_\beta}^{+},\Xi_{N_\beta}^{-}) \equiv
+\max\Big\{
+\max_{\alpha\in\mathcal{S}_+}\hat{\mathcal{J}}_+(\alpha;\Xi_{N_\beta}^{+},\Xi_{N_\beta}^{-}),
+\;\max_{\alpha\in\mathcal{S}_-}\hat{\mathcal{J}}_-(\alpha;\Xi_{N_\beta}^{+},\Xi_{N_\beta}^{-})
+\Big\}.
 \label{eq:objFncRecursionsR}
-\end{align}
-For brevity, we will use $\mathcal{J}$ to refer to both~\eqref{eq:objFncRecursions} and~\eqref{eq:objFncRecursions}.
-
+\end{equation}
 \end{subequations}
+For brevity, we will use $\mathcal{J}$ to refer to both~\eqref{eq:objFncRecursions} and~\eqref{eq:objFncRecursionsR}.}
 
-
-\subsection{Candidate recursion parameters}
-
-Propositions~\ref{prop:minimalOWNS-P} and~\ref{prop:minimalOWNS-R} use the eigenvalues of $M$ to achieve zero filter error, but this requires $N_\beta=\min\{\tilde{N}_+,\tilde{N}_-\}$ and $N_\beta=\tilde{N}_++\tilde{N}_-$ for OWNS-P and OWNS-R, respectively, while we want $N_\beta\ll N$. Therefore, we seek a subset of the eigenvalues that minimizes our objective functions for $N_\beta\ll N$.
-
-
-\subsection{Greedy recursion parameter selection}
-
-Given the eigenvalues $\{\alpha_k\}_{k=1}^{N}$, we wish to solve the optimization problem
+\response{Our subset selection problem becomes: for $N_\beta\ll N$, solve
 \begin{equation}
     \min_{
-    \hat{i}^{(+)}\subset i^{(+)},
-    \hat{i}^{(-)}\subset i^{(-)}
+    \Xi^+_{N_\beta}\subset\mathcal{S}_+,
+    \Xi^-_{N_\beta}\subset\mathcal{S}_-
     }
-    \mathcal{J}(\{
-    \alpha_{\hat{i}^{(+)}(j)},
-    \alpha_{\hat{i}^{(-)}(j)}
-    \}_{j=1}^{N_\beta}),
+    \mathcal{J}(\Xi_{N_\beta}^+,\Xi_{N_\beta}^-).
+    \label{eq:subsetSelection}
 \end{equation}
-for the subsets
-\[
-\hat{i}^{(+)}=\{\hat{i}^{(+)}(1),\dots,\hat{i}^{(+)}(N_\beta)\}\subset i^{(+)},\quad
-\hat{i}^{(-)}=\{\hat{i}^{(-)}(1),\dots,\hat{i}^{(-)}(N_\beta)\}\subset i^{(-)}.
-\]
-This problem is well-posed because the objective function is continuous (it is a quotient of polynomials with a non-zero denominator), but identifying the globally optimal set is computationally intractable because we must consider $[N_+! / (N_+-N_\beta)!][N_-! / N_\beta! / (N_--N_\beta)!]/N_\beta!/N_\beta!$
-combinations. Therefore, we use the greedy algorithm outlined in Algorithm~\ref{alg:greedyRecursion} to append the left- and right-going eigenvalues that lead to the largest decrease of the objective function at each iteration.
+This problem is well posed because the objective function is continuous (it is a quotient of polynomials with a non-zero denominator), but it is NP-hard~\cite{Natarajan_1995_OptimalSubset}. We solve it using the greedy algorithm outlined in Algorithm~\ref{alg:greedyRecursion}. In words, we randomly initialize $\Xi_1^+$ and $\Xi_1^-$ with elements of $\mathcal{S}_+$ and $\mathcal{S}_-$, respectively. At each iteration we use to $\hat{\mathcal{J}}_+$ and $\hat{\mathcal{J}}_-$ to identify the worst-approximated  elements of $\mathcal{S}_+$ and $\mathcal{S}_-$, which we append to our recursion parameter set. This strategy leads to the largest local decrease in $\mathcal{J}$.}
 
 \begin{remark}\label{rmk:tracking}
     Previous work on OWNS has combined heuristic parameter selection with mode-tracking, where important discrete modes (e.g., Kelvin-Helmholtz in free-shear flows or Mack's second mode in high-speed boundary layers) were added to the recursion parameter set to improve approximation accuracy~\cite{Towne_2015_OWNS-O,Towne_2022_OWNS-P,Zhu_2021_OWNS-R}. While previous methods manually identified eigenvalues to track, the present work proposes an automatic approach.
 \end{remark}
 \begin{remark}
-    The greedy algorithm can be initialized with user-specified recursion parameters, but we have found that it is better to initialize the greedy algorithm with many different randomly chosen pairs of left- and right-going eigenvalues, and to choose the parameter set with the smallest $\mathcal{J}$.
+    The greedy algorithm can be initialized with user-specified recursion parameters, but we have found that it is better to initialize the algorithm with many different randomly chosen pairs of left- and right-going eigenvalues, and to choose the parameter set with the smallest $\mathcal{J}$.
 \end{remark}
 
 \begin{algorithm}
 \caption{Greedy recursion parameter selection}\label{alg:greedyRecursion}
 \begin{algorithmic}
-\STATE $\{\beta_+^{1},\beta_-^{1}\} \gets \{\alpha_m,\alpha_n\}$ for randomly chosen $m\in i^{(+)}$ and $n\in i^{(-)}$
-\STATE $N_{\mathrm{greedy}} \gets 1$
-\STATE $\Xi_{N_{\mathrm{greedy}}} \gets \{\beta_+^1,\beta_-^1\}$
-\WHILE{$N_{\mathrm{greedy}} < N_\beta$}
-\STATE $N_{\mathrm{greedy}}\gets
-N_{\mathrm{greedy}} + 1$
-\STATE $\tilde{m} \gets \arg\max_{m\in i^{(+)}}
-\hat{\mathcal{J}}_+(\alpha_m;\Xi_{N_{\mathrm{greedy}}})$
-\STATE $\tilde{n} \gets \arg\max_{n\in i^{(-)}}
-\hat{\mathcal{J}}_-(\alpha_n;\Xi_{N_{\mathrm{greedy}}})$
-\STATE $\{
-\beta_+^{N_{\mathrm{greedy}}},
-\beta_-^{N_{\mathrm{greedy}}}
-\}\gets
-\{\alpha_{\tilde{m}},\alpha_{\tilde{n}}\}$
-\STATE $\Xi_{N_{\mathrm{greedy}}} \gets \{\beta_{+}^j,\beta_{-}^j\}_{j=1}^{N_{\mathrm{greedy}}}$
+\STATE Choose $\beta_+^1 \in \mathcal{S}_+$ and $\beta_-^1 \in \mathcal{S}_-$ randomly
+\STATE $\Xi_1^+ \gets \{\beta_+^1\}, \quad \Xi_1^- \gets \{\beta_-^1\}$
+\STATE $N_g \gets 1$
+\WHILE{$N_g < N_\beta$}
+\STATE $\beta_+^{N_g+1} \gets \arg\max_{\alpha\in\mathcal{S}_+}
+\hat{\mathcal{J}}_+(\alpha;\Xi_{N_g}^+,\Xi_{N_g}^-)$
+\STATE $\beta_-^{N_g+1} \gets \arg\max_{\alpha\in\mathcal{S}_-}
+\hat{\mathcal{J}}_-(\alpha;\Xi_{N_g}^+,\Xi_{N_g}^-)$
+\STATE $\Xi_{N_g+1}^+ \gets \Xi_{N_g}^+\cup \{\beta_+^{N_g+1}\}$
+\STATE $\Xi_{N_g+1}^- \gets \Xi_{N_g}^-\cup \{\beta_-^{N_g+1}\}$
+\STATE $N_g \gets N_g + 1$
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
+
 
 \subsection{Numerical stability of the recursive filter}
 
@@ -778,37 +718,45 @@ OWNS solves equations of the form $(M-i\beta_-^j)\hat{\bm{\phi}}^{j+1}=(M-i\beta
     \leq
     \kappa(M-i\beta_-^jI)\frac{\|M-i\beta_-^jI\|\|\hat{\bm{\phi}}^{j+1}-\hat{\bm{\phi}}^{j}\|+|\beta_+^j-\beta_-^j|\|\hat{\bm{\phi}}^j\|}{\|(M-i\beta_+I)\hat{\bm{\varphi}}^j\|}.
 \]
-If $\beta_+^j=\beta_-^j$, then $\|\hat{\bm{\phi}}^{j+1}-\hat{\bm{\phi}}^{j}\|=\mathcal{O}(\epsilon_{\mathrm{mach}})$, where $\epsilon_{\mathrm{mach}}$ is machine epsilon, and the error is $\mathcal{O}(\epsilon_{\mathrm{mach}}\kappa(M-i\beta_-^jI))$. However, this error grows as $|\beta_+^j-\beta_-^j|$ grows, and accumulates for $j=0,\dots,N_\beta-1$. Therefore, it is preferable for $|\beta_-^j-\beta_+^j|$ to be small, so we re-order the recursion parameters such that $|\beta_+^{j-1}|<|\beta_+^{j}|$ and $|\beta_-^{j-1}|<|\beta_-^{j}|$ for $j=1,\dots,N_\beta-1$. The error bounds do not depend on the order of the recursion parameters, but is critical to sort them by magnitude when implementing OWNS on a computer.
+If $\beta_+^j=\beta_-^j$, then $\|\hat{\bm{\phi}}^{j+1}-\hat{\bm{\phi}}^{j}\|=\mathcal{O}(\epsilon_{\mathrm{mach}})$, where $\epsilon_{\mathrm{mach}}$ is machine epsilon, and the error is $\mathcal{O}(\epsilon_{\mathrm{mach}}\kappa(M-i\beta_-^jI))$. However, this error grows as $|\beta_+^j-\beta_-^j|$ grows, and accumulates for $j=0,\dots,N_\beta-1$. Therefore, it is preferable for $|\beta_-^j-\beta_+^j|$ to be small, so we re-order the recursion parameters such that $|\beta_+^{j-1}|<|\beta_+^{j}|$ and $|\beta_-^{j-1}|<|\beta_-^{j}|$ for $j=1,\dots,N_\beta-1$. The error bounds do not depend on the order of the recursion parameters, but is critical to sort them by magnitude when implementing OWNS on a computer. \response{To further reduce the impact of rounding errors, we discard eigenvalues that are large in magnitude (e.g., greater in magnitude than $\mathcal{O}(100)$)}.
 
 
 \subsection{Greedy algorithm and spatial marching}
 
-For systems where $M$ varies slowly in $x$, the recursion parameters computed at the inlet can be reused at subsequent stations. However, they generally need to be updated to keep the filter error low, which can be done by \textit{tracking} them as they evolve downstream (Algorithm~\ref{alg:greedyTracking}). When the number of left- and right-going characteristics changes, such as supersonic boundary-layer flows when the number of subsonic and supersonic grid points changes, it can be advantageous (although not necessary) to update the parameters using Algorithm~\ref{alg:greedyRecursion}.
+For systems where $M$ varies slowly in $x$, the recursion parameters computed at the inlet can be reused at subsequent stations. However, they generally need to be updated to keep the filter error low, which can be done by \textit{tracking} them as they evolve downstream (Algorithm~\ref{alg:greedyTracking}). When the number of left- and right-going characteristics changes, such as in supersonic boundary-layer flows when the number of subsonic and supersonic grid points changes, it can be advantageous (although not necessary) to update the parameters using Algorithm~\ref{alg:greedyRecursion}.
 
-Consider the recursion parameters, $\Xi_{N_\beta}^{(i-1)}$, at station $i-1$, which are eigenvalues of $M^{(i-1)}$. They can be used as an input to a sparse eigenvalues solver, such as MATLAB's \texttt{eigs} function, to compute $\Xi_{N_\beta}^{(i)}$. For large, sparse $M$, this is much less costly than solving for the complete eigenspectrum.
-
+\response{
+Let $N_+^{(i)}$ and $N_-^{(i)}$ denote the number of left- and right-going modes, and 
+let $\Xi_{N_\beta}^{+,(i)}$ and $\Xi_{N_\beta}^{-,(i)}$ denote the greedy recursion 
+parameter sets at station $x^{(i)}$, for $i = 1,\dots,N_x$. The recursion parameters 
+from station $i-1$ can be used as inputs to a sparse eigenvalue solver, such as MATLAB's 
+\texttt{eigs} function, to compute the eigenvalues of $M^{(i)}$ closest to 
+$\Xi_{N_\beta}^{+,(i)}$ and $\Xi_{N_\beta}^{-,(i)}$. For large, sparse $M$, this 
+approach is far less expensive than computing the full eigenspectrum. 
+Algorithm~\ref{alg:greedyTracking} outlines the procedure: if the number of left- or 
+right-going modes changes, we recompute the recursion parameters from scratch using 
+Algorithm~\ref{alg:greedyRecursion}; otherwise, we update the parameters using a 
+sparse eigenvalue solver.
+}
 
 \begin{algorithm}
 \caption{Recursion parameter tracking}\label{alg:greedyTracking}
 \begin{algorithmic}
-\STATE Compute $N_+^{(1)}$ and $N_-^{(1)}$
-\STATE Choose $\Xi_{N_\beta}^{(1)}$ using Algorithm~\ref{alg:greedyRecursion}
-\FOR{$i=2,\dots,N_x$}
-\STATE Compute $N_+^{(i)}$ and $N_-^{(i)}$
-\IF{$N_+^{(i)}=N_+^{(i-1)}$}
-    \FOR{$j=0,\dots,N_\beta$}
-    \STATE $\{
-    \tilde{\beta}_+,\tilde{\beta}_-\}
-    \gets
-    \{\beta_+^{j},\beta_-^{j}\}^{(i-1)}
-    $
-    \STATE Compute $\beta_+^j$ and $\beta_-^j$ by finding eigenvalue of $M^{(i)}$ closest to $\tilde{\beta}_+$ and $\tilde{\beta}_-$
-    \STATE $\{\beta_+^{j},\beta_-^{j}\}\gets\{\beta_+,\beta_-\}$
-    \ENDFOR
-    \STATE $\Xi_{N_{\beta}}^{(i)} \gets \{\beta_{+}^j,\beta_{-}^j\}_{j=1}^{N_\beta}$
-\ELSE
-\STATE Compute $\Xi_{N_\beta}^{(i)}$ using Algorithm~\ref{alg:greedyRecursion} with the eigenvalues of $M^{(i)}$
-\ENDIF
+\STATE Compute $N_+^{(1)}$ and $N_-^{(1)}$ using Briggs' criterion (Definition~\ref{def:Briggs})
+\STATE Compute $\Xi_{N_\beta}^{+,(1)}$ and $\Xi_{N_\beta}^{-,(1)}$ using Algorithm~\ref{alg:greedyRecursion}
+\FOR{$i = 2,\dots,N_x$}
+    \STATE Compute $N_+^{(i)}$ and $N_-^{(i)}$ using Briggs' criterion (Definition~\ref{def:Briggs})
+    \STATE Initialize $\Xi_0^{+,(i)} \gets \{\},\quad \Xi_0^{-,(i)} \gets \{\}$
+    \IF{$N_+^{(i)} = N_+^{(i-1)}$ \textbf{and} $N_-^{(i)} = N_-^{(i-1)}$}
+        \FOR{$j = 1,\dots,N_\beta$}
+            \STATE Compute $\beta_+^j$ by initializing \texttt{eigs} with $(\Xi_{N_\beta}^{+,(i-1)})_j$
+            \STATE Compute $\beta_-^j$ by initializing \texttt{eigs} with $(\Xi_{N_\beta}^{-,(i-1)})_j$
+            \STATE $\Xi_j^{+,(i)} \gets \{\beta_+^j\} \cup \Xi_{j-1}^{+,(i)}$
+            \STATE $\Xi_j^{-,(i)} \gets \{\beta_-^j\} \cup \Xi_{j-1}^{-,(i)}$
+        \ENDFOR
+    \ELSE
+        \STATE Compute $\Xi_{N_\beta}^{+,(i)}$ and $\Xi_{N_\beta}^{-,(i)}$ using Algorithm~\ref{alg:greedyRecursion}
+    \ENDIF
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
@@ -819,7 +767,7 @@ Consider the recursion parameters, $\Xi_{N_\beta}^{(i-1)}$, at station $i-1$, wh
 Despite the added cost that the greedy algorithm incurs when computing the eigenvalues of $M$, it can still lead to a net decrease in computational cost, relative to heuristic selection, since it decreases the number of recursion parameters required to achieve a desired error tolerance. Moreover, the full eigenspectrum is required only at a small number of stations, potentially just the domain inlet, and the selected eigenvalues can be efficiently updated by \textit{tracking} using a sparse eigenvalues solver. We also note that in optimization tasks, such as the resolvent analysis by Towne et al.~\cite{Towne_2022_OWNS-P}, the initial cost of computing recursion parameters can be amortized over multiple iterations of the optimization routine.
 
 \begin{remark}
-    This work focuses on flows with only one inhomogeneous direction, but computing eigenvalues for flows with two or more inhomogeneous directions may not be feasible, making heuristic selection the preferred method for these flows.
+    \response{As formulated here, the subset selection problem~\eqref{eq:subsetSelection} requires computing the full eigenspectrum of $M$. While feasible for flows with a single inhomogeneous direction, this becomes impractical for flows with multiple inhomogeneous directions. Future work should therefore focus on reformulating~\eqref{eq:subsetSelection} to require only a partial eigenspectrum.}
 \end{remark}
 
 
@@ -854,9 +802,9 @@ Here, $(\cdot)_\infty$ and $(\cdot)^*$ denote freestream and dimensional quantit
 
 Linear stability calculations evolve infinitesimal disturbances, $\bm{q}'$, to a steady equilibrium solution, $\bar{\bm{q}}$, where $\bm{q}=(\rho,\bm{u},T)$ denotes the vector of primitive variables. Neglecting streamwise viscous terms, the linear OWNS equations can be written
 \begin{equation}
-    A(\bar{\bm{q}})\frac{\partial\bm{q}'}{\partial x} = L(\bar{\bm{q}})\bm{q}',\quad \bm{q}'(x,y,z,t)=\hat{\bm{q}}(x,y)e^{i(\beta z - \omega t)}
+    A(\bar{\bm{q}})\frac{\partial\bm{q}'}{\partial x} = L(\bar{\bm{q}})\bm{q}'+\bm{f},
 \end{equation}
-where we have linearized about the steady equilibrium solution and discretized in the wall-normal direction using a 4th-order central finite difference scheme.
+with $\bm{q}'(x,y,z,t)=\hat{\bm{q}}(x,y)e^{i(\beta z - \omega t)}$ and $\bm{f}(x,y,z,t)=\hat{\bm{f}}(x,y)e^{i(\beta z - \omega t)}$ where we have linearized about the steady equilibrium solution and discretized in the wall-normal direction using a 4th-order central finite difference scheme.
 
 
 \subsection{Nonlinear OWNS}
@@ -896,12 +844,20 @@ The projection error scales with the objective function $\mathcal{J}$, while we 
     \mathrm{error}(\hat{\bm{\phi}}_{\mathrm{TS}})&=
     \frac{\|\hat{\bm{\phi}}_{\mathrm{TS}}-P_{N_\beta}\hat{\bm{\phi}}_{\mathrm{TS}}\|}{\|\hat{\bm{\phi}}_{\mathrm{TS}}\|}
     =
-    \frac{\|\hat{\bm{\phi}}_{\mathrm{TS}}-P_{N_\beta}\hat{\bm{\phi}}_{\mathrm{TS}}\|}{\|\hat{\bm{\phi}}_{\mathrm{TS}}\|}\label{eq:errPhiTS}.
+    \response{\frac{\|V_{\mathrm{TS}}\bm{\psi}_{\mathrm{TS}}-P_{N_\beta}[V_{\mathrm{TS}}\bm{\psi}_{\mathrm{TS}}]\|}{\|V_{\mathrm{TS}}\bm{\psi}_{\mathrm{TS}}\|}}
+    \label{eq:errPhiTS}.
 \end{align}
 \end{subequations}
-Figures~\ref{fig:oblique-err-p} and~\ref{fig:oblique-err-r} plot $\mathcal{J}$ against the error~\eqref{eq:errPhi} for greedy and heuristic parameter selection for OWNS-P and OWNS-R, respectively, showing that the OWNS-P error scales with $\mathcal{J}$, while the OWNS-R error scales with $\mathcal{J}^{(R)}$ for small $N_\beta$. Due to rounding errors when computing $\beta_*^j$, the OWNS-R error increases for large values of $N_\beta$, even though $\mathcal{J}^{(R)}$ continues to decrease, as discussed in Remark~\ref{rmk:rounding}. We also see that greedy selection leads to faster convergence than heuristic selection for both OWNS-P and OWNS-R. Figure~\ref{fig:oblique-err-p} shows that greedy OWNS-P achieves machine zero error at $N_\beta=24$, while heuristic OWNS-P converges far more slowly and does not achieve machine zero error, even for much larger $N_\beta$. Greedy OWNS-R approaches machine zero error for $N_\beta\approx 40$, after which point the error increases due to rounding errors. We further see in Figure~\ref{fig:oblique-err-r} that OWNS-R with heuristic selection leads to large errors, which decrease slowly until $N_\beta\approx 58$, after which it also increases due to rounding errors.
+Figures~\ref{fig:oblique-err-p} and~\ref{fig:oblique-err-r} plot $\mathcal{J}$ against the error~\eqref{eq:errPhi} for greedy and heuristic parameter selection for OWNS-P and OWNS-R, respectively, showing that the OWNS-P error scales with $\mathcal{J}$, while the OWNS-R error scales with $\mathcal{J}^{(R)}$ for small $N_\beta$. Figures~\ref{fig:oblique-err-r} and~\ref{fig:oblique-err-TS-r} show that the OWNS-R error, when using greedy selection increases when $N_\beta$ grows large, as discussed in Remark~\ref{rmk:rounding}. In contrast, the error when using heuristic selection for OWNS-R is non-increasing with increasing $N_\beta$, suggesting that heuristic selection is less prone to rounding errors than greedy selection.
 
-Figures~\ref{fig:oblique-err-TS-p} and~\ref{fig:oblique-err-TS-r} show that greedy selection yields significantly less error in the TS wave than heuristic selection. The greedy algorithm selects the eigenvalue associated with the TS wave as a recursion parameter, as shown in Figure~\ref{fig:param-spectrum-greedy}, so by Propositions~\ref{prop:greedy-p} and~\ref{prop:greedy-r}, the filter error is zero. Figure~\ref{fig:param-spectrum-heuristic} shows the heuristic parameters for $N_\beta=20$. We see that although heuristic selection attempts to place its parameters near the TS wave and along the continuous branches, it does so less efficiently than the greedy algorithm. Although it accurately targets the left-going acoustic waves along the imaginary axis for $\mathcal{I}(\alpha)<0$, it distributes the parameters for the right-going acoustic waves (near the imaginary axis for $\mathcal{I}(\alpha)>0$) and the vortical waves (along the axis at $\pi/4$ radians for $\mathcal{I}(\alpha)>0$) less accurately. Moreover, it places parameters along the imaginary axis in the left half-plane, where there are no eigenvalues. Thus, the greedy parameters suggest avenues for improving the heuristic selection procedure.
+Figure~\ref{fig:oblique-err-p} shows that greedy OWNS-P achieves machine zero error at $N_\beta=24$, while heuristic OWNS-P converges far more slowly and does not achieve machine zero error, even for much larger $N_\beta$. Greedy OWNS-R approaches machine zero error for $N_\beta\approx 40$, after which point the error increases due to rounding errors. We further see in Figure~\ref{fig:oblique-err-r} that OWNS-R with heuristic selection leads to large errors, even with large $N_\beta$.
+
+Figure~\ref{fig:oblique-err-TS-p} shows that greedy selection yields significantly less error in the TS wave than heuristic selection when using OWNS-P. In contrast, for OWNS-R, Figure~\ref{fig:oblique-err-TS-r} shows that greedy selection yields less error for small $N_\beta$, while heuristic selection yields less error for large $N_\beta$, consistent with our observations in Figure~\ref{fig:oblique-err-r}. We further note that by Propositions~\ref{prop:greedy-p}, the error in the TS waves goes to zero if it is used as a recursion parameter, and the sudden decrease in error occurs when the greedy algorithm selects the TS wave as a recursion parameter.
+
+\response{
+Figure~\ref{fig:greedy-err-converge-quad} compares the error obtained using quad and double precision to compute $\{\beta_*^j\}_{j=1}^{N_\beta}$ for OWNS-R with heuristic parameter selection. Double precision yields rapidly increasing error as $N_\beta$ grows. Results for greedy selection are omitted, as quad precision provides negligible improvement in that case, likely due to the larger magnitude of the greedy parameters. For $N_\beta < 45$, double precision does not significantly increase the OWNS-R error, indicating that it is adequate in this regime. Therefore, we use double precision in the calculations presented in Section~\ref{sec:greedyMarching}.}
+
+Figure~\ref{fig:param-spectrum-heuristic} shows the heuristic parameters for $N_\beta=20$. We see that although heuristic selection attempts to place its parameters near the TS wave and along the continuous branches, it does so less efficiently than the greedy algorithm. Although it accurately targets the left-going acoustic waves along the imaginary axis for $\mathcal{I}(\alpha)<0$, it distributes the parameters for the right-going acoustic waves (near the imaginary axis for $\mathcal{I}(\alpha)>0$) and the vortical waves (along the axis at $\pi/4$ radians for $\mathcal{I}(\alpha)>0$) less accurately. Moreover, it places parameters along the imaginary axis in the left half-plane, where there are no eigenvalues. Thus, the greedy parameters suggest avenues for improving the heuristic selection procedure.
 
 \begin{remark}
     In Section~\ref{subsec:OWNSR}, our numerical analysis showed that OWNS-P will converge faster than OWNS-R, which is what we observe empirically in Figure~\ref{fig:greedy-err-converge}.
@@ -930,12 +886,12 @@ Figures~\ref{fig:oblique-err-TS-p} and~\ref{fig:oblique-err-TS-r} show that gree
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{figures/Oblique_Err_P_bw.pdf}
-        \caption{OWNS-P}\label{fig:oblique-err-p}
+        \caption{OWNS-P, random modes}\label{fig:oblique-err-p}
     \end{subfigure}
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{figures/Oblique_Err_R_bw.pdf}
-        \caption{OWNS-R}\label{fig:oblique-err-r}
+        \caption{OWNS-R, random modes}\label{fig:oblique-err-r}
     \end{subfigure}\\
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
@@ -947,8 +903,24 @@ Figures~\ref{fig:oblique-err-TS-p} and~\ref{fig:oblique-err-TS-r} show that gree
         \includegraphics[width=1\linewidth]{figures/Oblique_Err_TS_R_bw.pdf}
         \caption{OWNS-R, TS wave only}\label{fig:oblique-err-TS-r}
     \end{subfigure}\\
-    \caption{Error convergence for low-speed oblique breakdown, where $\Xi_{N_\beta}^G$ and $\Xi_{N_\beta}^H$ denote the greedy and heuristic recursion parameter sets, respectively.}
+    \caption{Error convergence for low-speed oblique breakdown, comparing OWNS-P and OWNS-R, using quad precision to compute $\{\beta_*^j\}_{j=1}^{N_\beta}*$ for OWNS-R.}
     \label{fig:greedy-err-converge}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth]{figures/Oblique_Err_R_quad_bw.pdf}
+        \caption{Random modes}\label{fig:oblique-err-r-quad}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth]{figures/Oblique_Err_TS_R_quad_bw.pdf}
+        \caption{TS wave only}\label{fig:oblique-err-r-TS-quad}
+    \end{subfigure}
+    \caption{Error convergence for low-speed oblique breakdown for OWNS-R, comparing using double and quad precision to compute $\{\beta_*^j\}_{j=1}^{N_\beta}*$ for heuristic recursion parameter selection only.}
+    \label{fig:greedy-err-converge-quad}
 \end{figure}
 
 \begin{figure}
@@ -1146,19 +1118,39 @@ We first demonstrate for the  oblique breakdown case discussed in Section~\ref{s
 
 \subsubsection{Linear calculation}
 
-OWNS-R with heuristic parameter selection does not remove left-going waves, so the march is unstable (see Section~\ref{subsec:stability}). Therefore, we compare OWNS-P and OWNS-R using greedy selection against OWNS-P using heuristic selection. To make meaningful comparisons, we take $N_\beta$ to be the smallest value that yields 10\%, 1\%, and 0.1\% relative error in the $N$-factor, measured against greedy OWNS-P with $N_\beta = 30$. Table~\ref{tab:oblique-lin-err} shows that greedy selection leads to a speed-up for both OWNS-R and OWNS-P, and that this speed-up pronounced for OWNS-R at 1\% error and OWNS-P and 0.1\% error.
+\response{OWNS-R with heuristic parameter selection does not fully remove left-going waves, so the march is unstable (see Figure~\ref{fig:greedy-stability}). Therefore, we compare OWNS-P and OWNS-R using greedy selection against OWNS-P using heuristic selection with and without mode-tracking. To make meaningful comparisons, we take $N_\beta$ to be the smallest value that yields 10\%, 1\%, and 0.1\% relative error in the $N$-factor, measured against the greedy OWNS-P solution obtained using $N_\beta = 30$. We further compare the performance of the greedy algorithm when it is performed at every step of the march against its performance when it is applied only at the domain inlet, with the recursion parameters updated for subsequent stations according to Algorithm~\ref{alg:greedyTracking}. We summarize these results in Table~\ref{tab:oblique-lin-err}, where speed-up is measured relative to the naive heuristic OWNS-P calculation (P-H) at each error level. We see that OWNS-R with greedy selection applied only at the inlet (R-GI) leads to the largest speed-up relative to P-H. Heuristic mode-tracking OWNS-P (P-T) and OWNS-R with greedy selection at all stations (R-GA) lead to similar speed-ups compared to each other, while OWNS-P with greedy selection only at the inlet (P-GI) yields slightly lower speeds-up than P-T and R-GA. Finally, OWNS-P with greedy selection at all stations (P-GA) yields the least speed-up. Table~\ref{tab:oblique-lin-err} clearly demonstrates both the higher speeds of OWNS-R and the better convergence of OWNS-P, which requires fewer recursion parameters when using greedy selection.}
 
-\begin{table}
-    \centering
-    \begin{tabular}{ c | c c c | c c c }
-              & & $N_\beta$ & & & Speed-up &\\
-        Error & P-H & P-G & R-G & P-H & P-G & R-G\\ \hline
-        10\%  & 11  & 5   & 29  & 1.0 & 2.3 & 3.6\\ \hline
-        1\%   & 17  & 5   & 29  & 1.0 & 3.9 & 6.0\\ \hline
-        0.1\% & 18  & 5   & 36  & 1.0 & 4.2 & 4.9
-    \end{tabular}
-    \caption{Speed-up achieved using greedy selection with OWNS-P (P-G) and OWNS-R (R-G) relative to heuristic selection with OWNS-P (P-H) for 3D low-speed oblique-wave breakdown.}
-    \label{tab:oblique-lin-err}
+\begin{table}[h]
+\centering
+\begin{subtable}{\linewidth}
+\centering
+\caption{$N_\beta$ required to reach target error}
+\begin{tabular}{c | cccccc}
+\toprule
+Error & P-H & P-T & P-GA & P-GI & R-GA & R-GI \\
+\midrule
+10\%  & 11 & 5 & 5 & 6 & 8  & 8 \\
+1\%   & 17 & 6 & 6 & 6 & 11 & 11 \\
+0.1\% & 18 & 6 & 6 & 6 & 16 & 17 \\
+\bottomrule
+\end{tabular}
+\end{subtable}
+\\
+\begin{subtable}{\linewidth}
+\centering
+\caption{Speed-up relative to heuristic OWNS-P (P-H)}
+\begin{tabular}{c | cccccc}
+\toprule
+Error & P-H & P-T & P-GA & P-GI & R-GA & R-GI \\
+\midrule
+10\%  & 1.0 & 2.6 & 1.4 & 2.0 & 2.2 & 8.0 \\
+1\%   & 1.0 & 3.6 & 2.0 & 3.4 & 3.8 & 12.5 \\
+0.1\% & 1.0 & 3.8 & 2.1 & 3.6 & 3.8 & 10.6 \\
+\bottomrule
+\end{tabular}
+\end{subtable}
+\caption{Speed-up for 3D low-speed oblique-wave breakdown using different recursion-parameter selection strategies, relative to heuristic OWNS-P (P-H): mode-tracking (with heuristic selection) for the TS wave with OWNS-P (P-T); greedy selection at all streamwise stations with OWNS-P (P-GA) and OWNS-R (R-GA); and greedy selection at the inlet with recursion-parameter tracking using OWNS-P (P-GI) and OWNS-R (R-GI).}
+\label{tab:oblique-lin-err}
 \end{table}
 
 
@@ -1199,31 +1191,31 @@ For the nonlinear calculations, we truncate the Fourier series at $M=3$ temporal
 
 We apply NOWNS to the Mach 4.5 boundary-layer flow over an adiabatic flat plate studied by Ma and Zhong~\cite{Ma_2003_DNS_1}, where $M_\infty = 4.5$, $T_\infty^*=65.15$ K, $p_\infty^*=728.44$ Pa, $Pr=0.72$, and $Re_\infty^* = \rho_\infty^* U_\infty^* / \mu_\infty^*=7.2\times10^6 / $ m. For the disturbance frequency $F=2.2\times10^{-4}$, Mack's second mode (MM) is the dominant instability. We truncate the Fourier series at $M=10$ modes and specify that MM have an amplitude of 10\% based on the free-stream temperature. We compare the temperature profiles obtained using greedy and heuristic parameter selection in Figure~\ref{fig:NOWNS-Zhu-01}, and discuss how heuristic NOWNS introduces spurious numerical fluctuations along the sonic line.
 
-Figure~\ref{fig:NOWNS-Zhu-T1-0500} shows that greedy and heuristic parameter selection predict similar temperature profiles for $T_1'$ near the inlet, while Figure~\ref{fig:NOWNS-Zhu-T1-2501} shows that at the domain outlet, heuristic NOWNS predicts a feature along the sonic line that is not predicted by greedy NOWNS. Figure~\ref{fig:NOWNS-Zhu-T3-0500} shows that near the domain inlet, heuristic NOWNS predicts a large fluctuation in $T_3'$ that is not predicted by greedy NOWNS. As the solution is marched downstream, this feature corrupts the solution, eventually leading to the fluctuation in $T_1'$ observed for heuristic NOWNS in Figure~\ref{fig:NOWNS-Zhu-T1-2501}. Although heuristic selection leads to accurate results for linear calculations for high-speed boundary-layer flows~\cite{Kamal_2020_HOWNS}, Figure~\ref{fig:NOWNS-Zhu-01} shows that the results become inaccurate for nonlinear calculations, and that greedy selection overcomes this challenge.
+Figure~\ref{fig:NOWNS-Zhu-T1-0500} shows that greedy and heuristic parameter selection predict similar temperature profiles for $\hat{T}_1'$ near the inlet \response{($\hat{T}_m'$ refers to the temperature profile for mode $m$)}, while Figure~\ref{fig:NOWNS-Zhu-T1-2501} shows that at the domain outlet, heuristic NOWNS predicts a feature along the sonic line that is not predicted by greedy NOWNS. Figure~\ref{fig:NOWNS-Zhu-T3-0500} shows that near the domain inlet, heuristic NOWNS predicts a large fluctuation in $\hat{T}_3'$ that is not predicted by greedy NOWNS. As the solution is marched downstream, this feature corrupts the solution, eventually leading to the fluctuation in $\hat{T}_1'$ observed for heuristic NOWNS in Figure~\ref{fig:NOWNS-Zhu-T1-2501}. Although heuristic selection leads to accurate results for linear calculations for high-speed boundary-layer flows~\cite{Kamal_2020_HOWNS}, Figure~\ref{fig:NOWNS-Zhu-01} shows that the results become inaccurate for nonlinear calculations, and that greedy selection overcomes this challenge.
 
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{figures/NOWNS_Zhu_T1_0500_bw.pdf}
-        \caption{$T_1'$ at $Re_x=6.92\times10^5$}\label{fig:NOWNS-Zhu-T1-0500}
+        \caption{$\hat{T}_1'$ at $Re_x=6.92\times10^5$}\label{fig:NOWNS-Zhu-T1-0500}
     \end{subfigure}
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{figures/NOWNS_Zhu_T1_2501_bw.pdf}
-        \caption{$T_1'$ at $Re_x=1.21\times10^6$}\label{fig:NOWNS-Zhu-T1-2501}
+        \caption{$\hat{T}_1'$ at $Re_x=1.21\times10^6$}\label{fig:NOWNS-Zhu-T1-2501}
     \end{subfigure}\\
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{figures/NOWNS_Zhu_T3_0500_bw.pdf}
-        \caption{$T_3'$ at $Re_x=6.92\times10^5$}\label{fig:NOWNS-Zhu-T3-0500}
+        \caption{$\hat{T}_3'$ at $Re_x=6.92\times10^5$}\label{fig:NOWNS-Zhu-T3-0500}
     \end{subfigure}
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=1\linewidth]{figures/NOWNS_Zhu_T3_2501_bw.pdf}
-        \caption{$T_3'$ at $Re_x=1.21\times10^6$}\label{fig:NOWNS-Zhu-T3-2501}
+        \caption{$\hat{T}_3'$ at $Re_x=1.21\times10^6$}\label{fig:NOWNS-Zhu-T3-2501}
     \end{subfigure}    
-    \caption{Temperature profiles for modes $T_1'$ and $T_3'$ computed for nonlinear evolution of Mack's second mode.}
+    \caption{Temperature profiles for modes $\hat{T}_1'$ and $\hat{T}_3'$ computed for nonlinear evolution of Mack's second mode.}
     \label{fig:NOWNS-Zhu-01}
 \end{figure}
 
@@ -1233,14 +1225,14 @@ Figure~\ref{fig:NOWNS-Zhu-T1-0500} shows that greedy and heuristic parameter sel
 %     \begin{subfigure}[b]{0.48\textwidth}
 %         \centering
 %         \includegraphics[width=1\linewidth]{figures/NOWNS_Zhu_Heuristic_T0.pdf}
-%         \caption{Heuristic $T_0'$}\label{fig:NOWNS-Zhu-Heuristic-T0}
+%         \caption{Heuristic $\hat{T}_0'$}\label{fig:NOWNS-Zhu-Heuristic-T0}
 %     \end{subfigure}
 %     \begin{subfigure}[b]{0.48\textwidth}
 %         \centering
 %         \includegraphics[width=1\linewidth]{figures/NOWNS_Zhu_Heuristic_T1.pdf}
-%         \caption{Heuristic $T_1'$}\label{fig:NOWNS-Zhu-Heuristic-T1}
+%         \caption{Heuristic $\hat{T}_1'$}\label{fig:NOWNS-Zhu-Heuristic-T1}
 %     \end{subfigure}
-%     \caption{Temperature contours for $T_0'$ and $T_1'$ for nonlinear evolution of Mack's second mode with heuristic recursion parameter selection.}
+%     \caption{Temperature contours for $\hat{T}_0'$ and $\hat{T}_1'$ for nonlinear evolution of Mack's second mode with heuristic recursion parameter selection.}
 %     \label{fig:NOWNS-Zhu-01}
 % \end{figure}
 
@@ -1248,14 +1240,14 @@ Figure~\ref{fig:NOWNS-Zhu-T1-0500} shows that greedy and heuristic parameter sel
 %     \begin{subfigure}[b]{0.48\textwidth}
 %         \centering
 %         \includegraphics[width=1\linewidth]{figures/NOWNS_Zhu_Heuristic_T3.pdf}
-%         \caption{Heuristic $T_3'$}\label{fig:NOWNS-Zhu-Heuristic-T3}
+%         \caption{Heuristic $\hat{T}_3'$}\label{fig:NOWNS-Zhu-Heuristic-T3}
 %     \end{subfigure}
 %     \begin{subfigure}[b]{0.48\textwidth}
 %         \centering
 %         \includegraphics[width=1\linewidth]{figures/NOWNS_Zhu_Greedy_T3.pdf}
-%         \caption{Greedy $T_3'$}\label{fig:NOWNS-Zhu-Greedy-T3}
+%         \caption{Greedy $\hat{T}_3'$}\label{fig:NOWNS-Zhu-Greedy-T3}
 %     \end{subfigure}\\
-%     \caption{Temperature contours for $T_3'$ for nonlinear evolution of Mack's second mode with heuristic and greedy recursion parameter selection. Note that the non-physical grid effects disappear when using greedy selection.}
+%     \caption{Temperature contours for $\hat{T}_3'$ for nonlinear evolution of Mack's second mode with heuristic and greedy recursion parameter selection. Note that the non-physical grid effects disappear when using greedy selection.}
 %     \label{fig:NOWNS-Zhu-3}
 % \end{figure}
 
@@ -1284,9 +1276,9 @@ Figure~\ref{fig:NOWNS-Zhu-T1-0500} shows that greedy and heuristic parameter sel
 \section{Conclusion}
 
 
-Through numerical analyses and experiments, we have compared the convergence properties of the recursive filters used by OWNS-P and OWNS-R, and introduced a greedy algorithm to automatically choose recursion parameters that ensure rapid convergence of the filter error. Although we have used the OWNS label, which refers to the method when generalized to the linearized Navier-Stokes equations, we would like to emphasize that all of the analyses also apply to systems of linear first-order hyperbolic equation, and that the greedy algorithm could also be applied to such systems. In summary, we showed that OWNS-P has superior error convergence properties, so that there exist recursion parameter sets for which OWNS-P is fully converged, while OWNS-R is not. Conversely, if OWNS-R is fully converged, then OWNS-P must also be fully converged. We found for boundary-layer flows that the heuristic parameter selection that yields a stable and accurate OWNS-P march is inaccurate and unstable for OWNS-R. The underlying issue appears to be the rounding errors associated with finite precision arithmetic introduced when factoring the polynomial~\eqref{eq:owns-r-polynomial} and with solving the system~\eqref{eq:filter-r}. Therefore, future work should investigate how to modify the OWNS-R routine to minimize the impact of this rounding error, for example, using higher precision arithmetic.
+Through numerical analyses and experiments, we have compared the convergence properties of the recursive filters used by OWNS-P and OWNS-R, and introduced a \response{\textit{subset selection} problem, which we solve using a greedy algorithm,} to automatically choose recursion parameters that ensure rapid convergence of the filter error. Although we have used the OWNS label, which refers to the method when generalized to the linearized Navier-Stokes equations, we would like to emphasize that all of the analyses also apply to systems of linear first-order hyperbolic equation, and that the greedy algorithm could also be applied to such systems. \response{In summary, we showed analytically that OWNS-P has better stability and accuracy properties and that there exist recursion parameter sets for which OWNS-P is fully converged, while OWNS-R is not. Conversely, if OWNS-R is fully converged, then OWNS-P must also be fully converged. In particular, we demonstrated numerically for boundary-layer flows that there exists heuristic parameter sets that yield a stable and accurate OWNS-P march, while the OWNS-R march is unstable. We observe that when using heuristic parameter selection, increasing $N_\beta$ does not yield stable and accurate OWNS-R marches due to rounding errors associated with finite precision arithmetic introduced when applying the OWNS-R filter~\eqref{eq:filter-r} as $N_\beta$ grows large, while greedy selection overcomes this challenge by keeping $N_\beta$ small. Table~\ref{tab:oblique-lin-err} demonstrates that OWNS-R leads to substantial speed-up relative to OWNS-P when convergent recursion parameters are chosen, while Zhu and Towne~\cite{Zhu_2021_OWNS-R} demonstrated that OWNS-R scales better for larger systems of equations. Future work should investigate how to choose better recursion parameters for OWNS-R so that $N_\beta$ remains small, either through the use of the greedy algorithm presented here or through heuristic recursion parameter selection.}
 
-We demonstrated for linear and nonlinear disturbance evolution in boundary-layer flows that our proposed greedy algorithm yields faster error convergence and a reduced computational cost relative to heuristic parameter selection. We further demonstrated the heuristic NOWNS for high-speed boundary-layer flows introduces spurious numerical oscillations, which are eliminated using the greedy algorithm, suggesting that the existing heuristic routine is not sufficiently accurate for nonlinear calculations. We compared the greedy and heuristic recursion parameter sets, and highlighted that greedy OWNS converges more quickly since it places its eigenvalues more efficiently, and we note that future work could use greedy parameter selection to help tune the heuristic routines. We further emphasize that the heuristic parameter selection routine requires an analytical approximation to the eigenvalues of the governing equations (e.g., the eigenvalues of the Euler equations linearized about a uniform flow can be computed analytically) and a method to use this approximation to construct sets of convergence recursion parameters. For equations of interest, an analytical approximation to the eigenvalues may not exist, and even if it does, it may not be obvious how to use the expression to construct convergent recursion parameters sets. The greedy algorithm allows for automatic recursion parameter selection without the need for analytical approximations, which will allow the OWNS approach to be applied more easily to new systems of linear first-order hyperbolic equations. Finally, we note that this work focused only on flows with a single inhomogeneous direction (the wall-normal direction), and we note that the approach may not extend readily to flows with two or more inhomogeneous directions due to the increased grid size, and so future work should explore how to adapt the greedy algorithm for such cases.
+\response{We demonstrated for linear and nonlinear disturbance evolution in boundary-layer flows that our proposed greedy algorithm yields faster error convergence and a reduced computational cost relative to naive heuristic parameter selection. In the linear case, greedy OWNS-P entails a higher cost than heuristic OWNS-P with mode-tracking, while greedy OWNS-R entails a lower cost than any of the OWNS-P calculations.} We further demonstrated the heuristic NOWNS for high-speed boundary-layer flows introduces spurious numerical oscillations, which are eliminated using the greedy algorithm, suggesting that the existing heuristic routine is not sufficiently accurate for nonlinear calculations. We compared the greedy and heuristic recursion parameter sets, and highlighted that greedy OWNS converges more quickly since it places its eigenvalues more efficiently, and we note that future work could use greedy parameter selection to help tune the heuristic routines. We further emphasize that the heuristic parameter selection routine requires an analytical approximation to the eigenvalues of the governing equations (e.g., the eigenvalues of the Euler equations linearized about a uniform flow can be computed analytically) and a method to use this approximation to construct sets of convergence recursion parameters. For equations of interest, an analytical approximation to the eigenvalues may not exist, and even if it does, it may not be obvious how to use the expression to construct convergent recursion parameters sets. The greedy algorithm allows for automatic recursion parameter selection without the need for analytical approximations, which will allow the OWNS approach to be applied more easily to new systems of linear first-order hyperbolic equations. \response{Finally, we note that this work focused only on flows with a single inhomogeneous direction (the wall-normal direction), and we note that the approach may not extend readily to flows with two or more inhomogeneous directions due to the increased grid size, and so future work should explore how to adapt the greedy algorithm for such cases so that the full eigenspectrum of $M$ need not be computed.}
 
 
 \section*{Acknowledgments}

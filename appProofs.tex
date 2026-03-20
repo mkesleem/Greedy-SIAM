@@ -1,6 +1,46 @@
 \section{Proofs}~\label{app:Proofs}
 
-\begin{proof}[Proof of proposition~\ref{prop:errBoundTriangle}]
+\response{Proposition~\ref{prop:minimalOWNS-P} was proved by Towne et al.~\cite{Towne_2022_OWNS-P}, restated here in our notation.}
+\begin{proof}[Proof of Proposition~\ref{prop:minimalOWNS-P}]
+    If there exists $(\hat{m},\hat{n})\in i^{(+)}\times i^{(-)}$ such that $\alpha_{\hat{m}}=\alpha_{\hat{n}}$, then
+    \[
+    R_{\hat{n}\hat{m}}
+    =
+    \prod_{j=0}^{N_\beta-1}\frac{\alpha_{\hat{m}}-\beta_{+}^{j}}{\alpha_{\hat{m}}-\beta_-^j}\frac{\alpha_{\hat{n}}-\beta_{-}^{j}}{\alpha_{\hat{n}}-\beta_+^j}
+    (V_{--}^{-1}V_{-+})_{\hat{n}\hat{m}}
+    =
+    (V_{--}^{-1}V_{-+})_{\hat{n}\hat{m}}
+    \neq 0
+    \]
+    so that $R_{N_\beta}^{-1}\neq I$ for any choice of recursion parameters.
+
+    Next assume that $\alpha_m\neq\alpha_n$ for all $(m,n)\in i^{(+)}\times i^{(-)}$, and note that
+    \[
+    \max_{(m,n)\in i^{(+)}\times i^{(-)}}\prod_{j=0}^{N_\beta-1}\frac{|\alpha_m-\beta_{+}^{j}|}
+    {|\alpha_m-\beta_-^j|}
+    \frac{|\alpha_n-\beta_{-}^{j}|}
+    {|\alpha_n-\beta_+^j|}=\|F_{++}\|\|F_{--}^{-1}\|,
+    \]
+    so that by Proposition~\ref{prop:approxProjectConvergence}, $P_{N_\beta}\to P$ when $\|F_{++}\|\|F_{--}^{-1}\|=0$. If $\tilde{N}_+\leq \tilde{N}_-$, we use~\eqref{eq:owns-p-params_plus} to obtain $\|F_{++}\|=0$ since $\alpha_m\in\{\beta_j\}_{j=0}^{N_\beta-1}$ and $\alpha_m\notin\{\beta_j\}_{j=0}^{N_\beta-1}$ for all $m \in i^{(+)}$. If $\tilde{N}_- < \tilde{N}_+$, we use~\eqref{eq:owns-p-params_minus} to obtain $\|F_{--}^{-1}\|=0$ since $\alpha_n\in\{\beta_-^j\}_{j=0}^{N_\beta-1}$ and $\alpha_n\notin\{\beta_+^j\}_{j=0}^{N_\beta-1}$ for all $n\in i^{(-)}$.
+\end{proof}
+
+
+The proof of Proposition~\ref{prop:errOWNSP}, which bounds the error $\|P-P_{N_\beta}\|$ for small $\|F_{++}\|\|F_{--}^{-1}\|$, uses Proposition~\ref{prop:errBoundTriangle} to bound $\|E-R_{N_\beta}^{-1}ER_{N_\beta}\|$.
+
+\begin{proposition}\label{prop:errBoundTriangle}
+    The norm of $E-R_{N_\beta}ER_{N_\beta}^{-1}$ can be bounded
+    \begin{align}
+    \begin{split}
+        \|E-R_{N_\beta}ER_{N_\beta}^{-1}\|&\leq \|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|\\
+        &\big(
+        2\|F_{++}\|^2\|F_{--}^{-1}\|^2\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|\\
+        &+\|F_{++}\|\|F_{--}^{-1}\|\|V_{++}^{-1}V_{+-}\|+\|F_{++}\|\|F_{--}^{-1}\|\|V_{--}^{-1}V_{-+}\|\|
+        \big).
+    \end{split}
+    \label{eq:errBoundTriangleFinal}
+    \end{align}
+\end{proposition}
+\begin{proof}
     $R_{N_\beta}$ comprises four blocks, where the diagonal blocks are square and the off-diagonal block are conformal with them for partitioning. Recall from~\eqref{eq:approxProjectRMat} that $R_{N_\beta}$ is defined as the inverse of another matrix, so that obtaining a simplified expression for $R_{N_\beta}^{-1}$ is straightforward, while it is more challenging for $R_{N_\beta}$. Define $S=R_{N_\beta}^{-1}$, so that it can be inverted blockwise as
     \[
         R_{N_\beta}=S^{-1}=
@@ -81,5 +121,27 @@
     \label{eq:errBoundBlockInverse}
     \end{subequations}
     Substituting~\eqref{eq:errBoundBlockInverse} into~\eqref{eq:errBoundTriangle} yields~\eqref{eq:errBoundTriangleFinal}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:errOWNSP}]
+    By the triangle inequality
+    \[
+    \|\sum_{k=0}^\infty(F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^k\|\leq \sum_{k=0}^\infty a^k
+    \]
+    for $a=\|F_{++}\|^2\|F_{--}^{-1}\|^2\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|$, so that the Neumann series converges if $a<1$, or $\|F_{++}\|\|F_{--}^{-1}\|<(\|V_{++}^{-1}V_{+-}\|\|V_{--}^{-1}V_{-+}\|)^{-1/2}$. For $\|F_{++}\|\|F_{--}^{-1}\|<\epsilon$, with $\epsilon$ as in~\eqref{eq:errBoundEpsilon}, we obtain
+    \[
+        \|(I_{++}-F_{++}V_{++}^{-1}V_{+-}F_{--}^{-2}V_{--}^{-1}V_{-+}F_{++})^{-1}\|\leq1+\mathcal{O}(\epsilon^2).
+    \]
+    so that using~\eqref{eq:errBoundTriangleFinal} from Proposition~\eqref{prop:errBoundTriangle} yields
+    \begin{equation}
+        \|E-R_{N_\beta}ER_{N_\beta}^{-1}\|\leq
+        \|F_{++}\|\|F_{--}^{-1}\|\big(\|V_{++}^{-1}V_{+-}\|+\|V_{--}^{-1}V_{-+}\|\big)+\mathcal{O}(\epsilon^2).
+        \label{eq:errBoundNeumann}
+    \end{equation}
+    Finally, the induced Euclidean norm of a matrix is sub-multiplicative so that
+    \[
+    \|P-P_{N_\beta}\|\leq \|V\| \|E-R_{N_\beta}ER_{N_\beta}^{-1}\| \|V^{-1}\|,
+    \]
+    which yields~\eqref{eq:errOWNSP} when combined with~\eqref{eq:errBoundNeumann}.
 \end{proof}
 
