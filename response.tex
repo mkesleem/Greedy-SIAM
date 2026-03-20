@@ -1,0 +1,309 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{bm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{enumitem}
+ \geometry{
+ letterpaper,
+ left=1in,
+ right=1in,
+ top=1in,
+ bottom=1in,
+ }
+
+\title{Response to Reviews for ``Greedy recursion parameter selection for one-way spatial integration of hyperbolic equations''}
+\author{Sleeman,~M.~K. and Colonius,~T.}
+\date{}
+\newcommand{\response}[1]{\textcolor{red}{#1}}
+\newcommand{\tim}[1]{\textcolor{cyan}{Tim: #1}}
+
+\begin{document}
+
+\maketitle
+
+\begin{flushleft}
+Dear Dr.\ Hagstrom:\\
+\end{flushleft}
+We would like to thank the referees for their helpful feedback, which we feel has greatly improved the manuscript. We would like to highlight that we have substantially changed how we present the optimization problem in Section 3 based on feedback and questions from the reviewer. First, under certain conditions, we can guarantee that the eigenvalues of the linear operator $M$ can be used to construct recursion parameter sets such that the OWNS approximations converge. However, these convergent sets are large, and we would like for them to be smaller. Therefore, we formulate \textit{subset selection} problem, where we seek a subset of the convergent recursion parameters that minimizes the error in the OWNS approximation. Subset selection is an NP-hard problem, and so it cannot be solved in polynomial time. Instead, we use a greedy algorithm to try to find a nearly optimal solution.
+
+Our subset selection problem only uses eigenvalues of $M$ as recursion parameters, and the reviewers asked whether this is necessary. It is likely not necessary and different candidate recursion parameters could likely be used. However, we require the eigenvalues of $M$ to compute the objective function that we seek to minimize. If the reviewers are suggesting that we choose from different recursion parameters so that we reduce the cost of the greedy algorithm, then we would also need to choose a different objective function. It is likely that this method could be implemented using only a subset of the full eigenspectrum. However, for the problem considered in this work, computing the full eigenspectrum is feasible, and so we leave such modifications for future work.
+
+We believe that we have addressed all of the feedback from the referees, and below we outline how we have addressed each of the comments. 
+
+\begin{flushleft}
+Sincerely,\\
+Michael Sleeman
+\end{flushleft}
+
+
+\pagebreak
+\section*{Referee 1}
+
+The one-way Navier-Stokes equations (OWNS) offer a fast approach for computing the evolution of disturbances in slowly varying flows and, more broadly, hyperbolic systems of equations, via spatial marching. The method requires selecting a set of problem-specific recursion parameters to define a filter that removes upstream-traveling waves. Several variants of OWNS have been developed, including two different approximations of the underlying exact projection operator, called OWNS-P and OWNS-R.
+
+This paper makes two valuable contributions. First, it proposes a greedy algorithm for optimally selecting the recursion parameters and shows that this approach is much more effective than the standard heuristic selection procedure. Unlike the heuristic approach, the greedy algorithm does not require a priori knowledge of the problem-specific physics, making OWNS easier to apply to new problems and potentially extending its applicability and adoption within the community. Second, the paper rigorously explains the slower convergence and more stringent parameter-selection requirements of OWNS-R. I have been aware of these issues for several years, and I am pleased to finally have a clear explanation.
+
+Overall, I am very supportive of the paper. However, I would like to see the comments below (especially the four major comments) carefully addressed before I can recommend publication.
+
+
+\subsection*{Major Comments}
+
+\begin{enumerate}
+    \item The new ideas offered by this paper are largely buried among many previous results (which are needed to provide context), and the paper does not always clearly distinguish between these two categories. Of the 36 propositions, definitions, and remarks in Section 2, I count 5 that appear to be genuinely new (2.15, 2.16, 2.28, 2.29, 2.35), as opposed to restatements or obvious consequences of previous work. Of the remaining items, some clearly indicate their source (e.g., 2.2, 2.4, 2.5, 2.7, 2.11, 2.12, 2.22, 2.30, 2.36), while others do not (e.g., 2.9, 2.13, 2.14, 2.20, 2.25, 2.34). The paper should more clearly distinguish between previous ideas and genuinely new ones, both to give proper credit for the former and to better highlight the novelty and value of the latter (which, again, I think is substantial).
+    \response{
+    We have updated the Propositions so that they are written ``\textbf{Proposition X.YY (Citation) Statement of Proposition...}'' so that previous work is cited. We summarize changes to Propositions below:
+    \begin{itemize}
+        \item Proposition 2.9: We have removed Proposition 2.9 and we have updated the paper to cite and Towne et al.\ (2022) for Proposition 2.8.
+        \item Proposition 2.13: We have updated the paper to cite and Towne et al.\ (2022), referring to its proof.
+        \begin{itemize}
+            \item Proposition 2.13 becomes Proposition 2.12 in the revised manuscript.
+        \end{itemize}
+        \item Proposition 2.14: We have updated the paper to cite and Towne et al.\ (2022), referring to its proof.
+        \begin{itemize}
+            \item Proposition 2.14 becomes Proposition 2.13 in the revised manuscript.
+        \end{itemize}
+        \item Remark 2.20: Section 3.1 on page 11 of Zhu \& Towne discusses how OWNS-P and OWNS-R make two different approximations to $P$, and that OWNS-P approximates the eigenvectors, while OWNS-R approximates the eigenvalues. However, it is not obvious from this discussion that the OWNS-P approximation is a projection matrix that does not commute with $M$, and that the OWNS-R approximation commutes with $M$ but is not a projection matrix. Towne's thesis from 2016 shows that OWNS-P yields a projection matrix, which we cite, but it does not explain that this approximation does not commute with $M$. We expanded remark 2.20 to refer to this work in Zhu \& Towne.
+        \begin{itemize}
+            \item Remark 2.20 becomes Remark 2.18 in the revised manuscript.
+        \end{itemize}
+        \item Proposition 2.25:
+        \response{
+        Remark 2.20 (now Remark 2.18) has been updated to refer to the discussion in Zhu \& Towne that shows that OWNS-R approximates the eigenvalues of $M$ instead of the eigenvectors.
+        \begin{itemize}
+            \item Proposition 2.25 becomes Proposition 2.23 in the revised manuscript.
+        \end{itemize}
+        }
+        \item Remark 2.34: Remark 2.20 (now Remark 2.18) has been updated to refer to the discussion in Zhu \& Towne that shows that OWNS-R approximates the eigenvalues of $M$ instead of the eigenvectors. Zhu \& Towne do not show that the OWNS-R approximation to $P$ is not generally a projection, nor do they show that repeated applications of the OWNS-R approximation will cause solution blow-up.
+        \begin{itemize}
+            \item Proposition 2.34 becomes Proposition 2.32 in the revised manuscript.
+        \end{itemize}
+    \end{itemize}
+    }
+    
+    \item The main disadvantage, in my view, of the proposed greedy algorithm is the need to (occasionally) compute the full eigenspectrum of $M(x)$. I am curious whether insisting that the recursion parameters coincide with eigenvalues is vital to its success. For example, one could imagine a greedy algorithm that selects the best parameter from a prescribed grid of candidate parameters over the region of interest in the complex plane, where best is defined as minimizing error over this grid. Or, you could select the best parameter from the possible values defined by the usual heuristic curves (rather than arbitrary parameterizations of these curves that are typically used). My guess is that these approaches would require more parameters to achieve a desired error level in the solution, but the overall cost might still be lower since the full eigenspectrum need not be computed. This might be especially useful for extending the concept to problems with multiple inhomogeneous directions, where the eigendecomposition could be a showstopper.
+
+    \response{The recursion parameters need not be eigenvalues of $M(x)$ for the greedy algorithm to work. However, we use these eigenvalues to define the objective function, and so we would need to define a different objective function to implemented the greedy algorithm without computing the eigenvalues of $M$. We have updated Section 3 so that we cast the optimization problem as a \textit{subset selection} problem, where we seek a subset of the convergent recursion parameters (which are a subset of the eigenvalues of $M$) that minimizes the OWNS approximation error for a given $N_\beta$. Future work could explore how to pose this problem with incomplete knowledge of the eigenvalues of $M$ and/or in terms of an optimization for recursion parameters that are not eigenvalues of $M$.}
+
+    \item The results reported in sections 5 and 6 compare the performance of the heuristic and greedy methods. A third case should be added to these comparisons-the heuristic method with mode tracking of the dominant mode (TS or MM), since this is the approach actually used in virtually all cases in practice. I do not expect that including mode tracking will improve the convergence rate of the heuristic method, but it will shift the error curves downward (especially in Figure 1 (c,d)) and reduce the $N_\beta$ required to reach the various error levels in Table 1. It may also reduce the artifacts reported in Figure 4. Put another way, the current comparison in the paper pits the greedy algorithm against a naive implementation of the heuristic approach rather than the one used in practice.
+
+    \response{
+    We do not compare heuristic with mode tracking in section 5 as it does not yield interesting figures. For the case where we consider a random combination of eigenvectors, mode tracking does not dramatically change the error because the function being projected comprises many different eigenvectors that are not the TS wave, and so tracking the TS wave does not noticeable change the error. For the case where we plot the error in the projected TS wave, using mode tracking trivially makes the error zero, so that the error is zero for all $N_\beta$.
+    }
+    \response{
+    We have modified section 6 to make the following comparisons:
+    \begin{enumerate}
+        \item Heuristic OWNS-P without mode-tracking
+        \item Heuristic OWNS-P with mode-tracking of the TS wave
+        \item Greedy OWNS-P and OWNS-P, with greedy algorithm applied at every step of the march
+        \item Greedy OWNS-P and OWNS-R, with greedy algorithm applied only at the inlet, and recursion parameter tracking (Algorithm 3.2) to efficiently update the recursion parameters at subsequent stations.
+    \end{enumerate}
+    OWNS-P with heuristic mode-tracking performs better than greedy OWNS-P, while greedy OWNS-R performs better than all other methods. OWNS-P with heuristic mode-tracking has the advantage that the solver is explicitly told to keep the error in the TS wave small, while greedy selection has no such knowledge.
+    }
+
+    % In section 6, we 
+    % Propositions 2.14 and 2.27 establish recursion parameter sets that guarantee convergence, while the greedy algorithm seeks an optimal subset that minimizes the OWNS approximation error. An important distinction between the heuristic and greedy approaches is the information required to construct the parameter sets. The greedy algorithm selects recursion parameters using only the eigenvalues of the discretized operator $M(x)$, while heuristic parameter selection (with or without mode tracking) relies on knowledge of the underlying physics. We have considered how to compare these approaches fairly and believe that the comparison presented in the manuscript is appropriate for the following reasons.
+    % \begin{enumerate}[label=\arabic*.]
+    %     \item Mode tracking embeds the parameter selection procedure with knowledge of which modes are physically relevant to the flow. The greedy algorithm, by construction, has no access to this information and operates purely on the eigenvalues of the discretized $M(x)$. Including mode tracking in the heuristic procedure but not in the greedy algorithm would therefore introduce additional information into one method and not the other, making the comparison unfair.
+    %     \item A key advantage of the greedy algorithm is precisely that it does not require any knowledge of the underlying physics. Mode tracking, however, incorporates such knowledge, which would undermine the central point we wish to emphasize about the method.
+    %     \item As noted in the reviewer's comment, mode tracking does not change the convergence rate of the heuristic parameter selection procedure. For this reason, we believe that including this additional comparison would not provide significant additional insight for the reader.
+    % \end{enumerate}
+    % For these reasons, we prefer not to include this additional comparison in the manuscript.
+
+    \item I am, of course, biased, but I feel that the paper is generally too negative about OWNS-R, especially in summary statements, e.g., in the abstract and conclusions. It is absolutely fair to highlight the slower convergence of OWNS-R with $N_\beta$ and the need for higher-quality recursion parameters. As mentioned above, explaining these observations is, in my view, one of the two key contributions of the current paper. At the same time, focusing exclusively on convergence misses the main point of OWNS-R: its improved cost scaling with $N_\beta$. To your credit, you do mention this in Remark 2.36, but then ignore it when drawing conclusions. As shown by your results in section 5, the improved scaling of OWNS-R largely offsets the need for larger $N_\beta$; in fact, you show OWNS-R to hold a slight speed advantage over OWNS-P for achieving target error values when using your optimized parameters. I would appreciate a more balanced discussion of the tradeoffs between $N_\beta$, cost scaling, and actual cost in your summary statements about OWNS-P and OWNS-R.
+    
+    \response{OWNS-R has better scaling than OWNS-P, while OWNS-P has better convergence properties than OWNS-R. Previous work by Zhu and Towne has discussed the superior scaling properties of OWNS-R, while the present work shows that OWNS-P has better convergence properties. We emphasized the superior convergence properties of OWNS-P because this comparison is one of the contributions of this paper. We have updated the paper to highlight the better scaling of OWNS-R and to say that while OWNS-P performs well for small problems, it does not scale well to large problems, which is where OWNS-R excels.}
+    
+\end{enumerate}
+
+
+\subsection*{Minor Comments}
+
+\begin{enumerate}
+    \item The size parameter $N$ is used inconsistently. In (2.1) and the text below it, $N$ is the number of components in the space-continuous vector $q$, while after (2.2), it is the number of components in the $y$-discretized state. More generally, the paper makes no notational distinction between vectors in $\mathbb{R}^{N_{\text{continuous}}}$ vs $\mathbb{R}^{N_{\text{discrete}}}$.
+    
+    \response{
+    We have updated the equations to distinguish between the discrete and continuous approximations.
+    }
+    \item Line 146: ``where $\hat{\phi}$ and $\hat{g}$ represent $\phi$ and $f_{\phi}$, respectively, in the frequency domain ...''. The conversion from $f_{\phi}$ to $\hat{g}$ involved both a Fourier transform and a transformation involving A.
+    
+    \response{
+    The transformation from $f_\phi$ to $\hat{g}$ involves only a Laplace transform, as $f_\phi$ is already in characteristic variables.
+    }
+    \item Line 402: ``Whereas OWNS-P yields a projection matrix that generally does not commute with $M$, OWNS-R yields a matrix that commutes with $M$ but is not generally a projection matrix, so that OWNS-P and OWNS-R each lose one of the properties of $P$ (projection matrix or commutation with M).'' This point is explicit in Zhu \& Towne.
+    
+    \response{We do not feel that this point is explicit in Zhu \& Towne. Section 3.1 on page 11 of Zhu \& Towne discusses how OWNS-P and OWNS-R make two different approximations to $P$, and that OWNS-P approximates the eigenvectors, while OWNS-R approximates the eigenvalues. However, it is not obvious from this discussion that the OWNS-P approximation is a projection operator that does not commute with $M$, and that the OWNS-R approximation commutes with $M$ but is not a projection operator. Towne's thesis from 2016 shows that OWNS-P yields a projection matrix, which we cite, but it does not explain that this approximation does not commute with $M$.}
+    
+    \item The introductory paragraph of section 3 discusses why previous OWNS implementations have used the heuristic approach to selecting recursion parameters, but does not mention the main reasons for doing so: avoiding the need to compute eigenvalues of $M(x)$.
+
+    \response{
+    We have updated the paragraph to highlight that previous work has avoided computing the eigenvalues of $M(x)$ due to its relatively high computational cost. We then state that our work differs from this previous work because we choose to accept this cost with the goal of obtaining a net decrease in computational cost by choosing parameters that converge faster. For large problems, computing the full eigenspectrum will not be feasible, but it is feasible for the problems considered in this work and much of the previous work on OWNS. Future work should investigate how to modify the greedy algorithm to work with only a subset of the full eigenspectrum so that the method can be applied to large systems.
+    }
+    
+    \item Line 435: ``.. refer to both (3.1b) and (3.1b).'' I suspect the second equation number should be (3.1c).
+
+    \response{We have fixed this mistake.}
+    
+    \item Line 448: If I understand correctly, the reported cost scaling for optimizing the parameters comes from a combinatorial optimization approach in which every possible combination is attempted and compared. Is that correct? I suspect there are more efficient ways to optimize the parameters, e.g., using a variational approach. I'm not saying you should have done this, but it would be good to be clear what assumption you're making here and perhaps mention that other, more affordable options may exist.
+
+    \response{We have reformulated the optimization problem as a \textit{subset selection} problem, which is NP-hard. We choose a greedy algorithm, which runs in polynomial time, but does not guarantee that we find a good solution. However, it is easy to implement and in practice we have observed that it works well. We have modified this discussion to include references to literature and to make these points clearer.
+    }
+
+    % Propositions 2.14 and 2.27 list conditions for convergent recursion parameters to ask and explain how to choose these recursion parameters using the eigenvalues of $M(x)$. The optimization problem seeks an optimal subset of these eigenvalues that minimizes the error in the OWNS approximation for a given number of recursion parameters. This is a ``best subset selection'' problem, which is an NP-hard problem, so that we cannot find the exact solution in polynomial time (if we were willing to consider every combination, which would take a long time, then we could find the exact solution). We choose a greedy algorithm, which runs in polynomial time, but does not guarantee that we find a good solution. However, it is easy to implement and in practice we have observed that it works well. We have modified this discussion to include references to literature and to make these points clearer.
+    
+    \item It would be helpful to add remarks that describe the logic and procedure of Algorithms 3.1 and 3.2 in words.
+
+    \response{We have added descriptions.}
+    
+    \item Tracking the optimal parameters is a clever way to maintain the effectiveness of the parameters while reducing the frequency at which the full eigenspectrum must be computed. When you do recompute the full spectrum, this likely leads to a sudden change in some of the parameters. Does this discontinuity (in $x$) of the projection operator cause any issues?
+
+    \response{Rapid changes in the recursion parameters between stations does not appear to have a negative impact on the march. We have included calculations for OWNS-P and OWNS-R where we run the greedy algorithm at each station, and doing so does not render the calculation inaccurate. Station $i+1$ only has knowledge of the recursion parameters at station $i$ through the error introduced by the OWNS approximation at station $i$. If the OWNS error is small at stations $i$ and $i+1$, then a large change in recursion parameters should not have a large negative impact on the march stability and accuracy.}
+    
+    \item Is ($\hat{f}_{mn}$) in (4.3a) an external forcing term? If so, why does it appear here but not in (4.2)?
+
+    \response{We have added $f$ to (4.2)}
+    
+    \item You rightly point out that computing $beta^*$ can introduce finite-precision errors. For your information, in Zhu \& Towne, we used quad precision (as you also suggested in the conclusions) to alleviate this issue, although looking back, I see that we did not report this (which we should have). This is an easy fix, and it would be interesting to see how doing so impacts the results you report in Figures 1 and 5.
+
+    \response{We have updated these figures to use quad precision and added a comparison between quad and double precision. Quad precision appears to only impact the accuracy of the heuristic OWNS-R calculation, but not the greedy calculation. In general, the greedy recursion parameters are larger in magnitude than the heuristic paramers, which may explain this difference. Quad precision is also only helpful for large $N_\beta\geq45$, while in practice the greedy algorithm yields accurate OWNS-R calculations with $N_\beta<20$, so we do not use quad precision for the marching calculations, and instead use it only in Section 5 when we compare the convergence of greedy and heuristic parameter selection for OWNS-P and OWNS-R.}
+
+    \response{We have removed Appendix B, which plots the error when computing $\beta_*$, as we feel this discussion is no longer necessary now that we use quad to compute $\beta_*$.}
+    
+    \item The second and third expressions in (5.1b) are the same. I assume that the right-most expression is meant to be analogous to the right-most expression in (5.1a).
+
+    \response{We have corrected this.}
+    
+    \item In the results reported in Section 6, how many times did you compute the full eigenspectrum? What fraction of the total cost of the simulation did this entail?
+
+    \response{In the original submission, we performed the greedy algorithm 10 times, but we did not time how long this took. Instead, we timed only the whole calculation. In the resubmitted paper, we (i) perform the greedy algorithm at all stations, or (ii) perform the greedy algorithm only at the inlet with recursion parameter tracking (Algorithm 3.2) for subsequent stations.}
+    
+    \item Please remind the reader of the definition of $T_1$, etc., in section 6.2. It took me a minute to realize the meaning of this notation.
+
+    \response{We have added text to explain the meaning of $\hat{T}_1$.}
+\end{enumerate}
+
+I hope you find these comments helpful for improving the paper. 
+
+\response{Thank you for your helpful comments, they have allowed us to improve our paper substantially.}
+
+\pagebreak{}
+
+\section*{Referee 2}
+
+The use of one-way wave equations based on the evolution of hyperbolic formulations of high-order nonreflecting boundary conditions is quite useful and potentially applicable to a wide variety of problems besides the important applications in fluid dynamics which are the focus of this manuscript. Central to the application of the method in complex cases is the selection of parameters, and the greedy algorithm proposed here is both reasonable and apparently quite effective. Therefore I recommend that the work eventually be published. However, as it stands, the manuscript needs substantial improvements which I will detail below.
+
+
+\subsection*{Major comments}
+
+\begin{enumerate}
+    \item The organization and writing are very difficult to follow. The first 12 pages or so attempt to recap the basic flavors of the method, with statements (not always entirely clear) of theoretical results. The meat of the original contribution only appears half way through. I understand that the method is not familiar to most readers of SISC, so a basic introduction of the main ideas and current state-of-the-art is needed, but this should be brief and focused. Known technical results and their proofs, if needed later on, can be pushed to an appendix. As written I doubt that many people will get to the main algorithm.
+
+    \response{We understand that the paper spends a lot of time discussing the OWNS-P and OWNS-R methods. Where possible, we have removed proofs and propositions. However, the conditions under which OWNS-P and OWNS-R converge underpin the development and implementation of the greedy algorithm. In addition, several of the propositions are novel, and provide insight into the convergence properties of OWNS-P and OWNS-R. One of the reasons we developed the greedy algorithm is that we observed that we could not obtain a stable and accurate OWNS-R march using recursion parameters that work for OWNS-P. The original development of OWNS-R claimed that recursion parameters for OWNS-P could be used without modification for OWNS-R, which we found not to be true. Our discussion of OWNS-R explains these observations of OWNS-R, which were not discussed in previous work on OWNS-R.}
+    
+    \response{In addition, we have made changed how we present the proposition so that it is clearer when a results has been proved previously. They are now written: ``\textbf{Proposition X.YY (Citation) Statement of Proposition...}''.}
+
+    \response{
+    Below we summarize which propositions and proofs have been removed, moved to an appendix, or why we have chosen to keep them:
+    \begin{itemize}
+        \item We have removed the proof of proposition 2.8, referring to the literature instead.
+        \item We have removed proposition 2.9, referring to the literature instead in Proposition. 28.
+        \item We keep proposition 2.11 because it introduces notation used throughout the paper.
+        \begin{itemize}
+            \item Proposition 2.11 becomes Proposition 2.10 in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.12 because it is important to our comparison of OWNS-P and OWNS-R.
+        \begin{itemize}
+            \item Proposition 2.12 becomes Proposition 2.11 in the revised manuscript.
+        \end{itemize}
+        \item We keep propositions 2.13 and 2.14 because they underpin the greedy algorithm. However, we refer to the literature for a proof, moving the proof in our notation to an appendix.
+        \begin{itemize}
+            \item Propositions 2.13 and 2.14 become Propositions 2.12 and 2.14, respectively, in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.16 because it is novel and is used to define the objective function used by the greedy algorithm. However, we move its proof to an appendix. Additionally, proposition 2.15 is only used to prove proposition 2.16, so we move it and its proof to the appendix as well.
+        \begin{itemize}
+            \item Proposition 2.16 becomes Proposition 2.15 in the revised manuscript.
+            \item Proposition 2.15 becomes Proposition A.1
+        \end{itemize}
+        \item We keep proposition 2.17 and its proof because it is novel and underpins the greedy algorithm.
+        \begin{itemize}
+            \item Proposition 2.17 becomes Proposition 2.15 in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.19 is novel important to our comparison of OWNS-P and OWNS-R.
+        \begin{itemize}
+            \item Proposition 2.19 becomes Proposition 2.17 in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.22 because it is necessary to understand OWNS-R and the rest of our discussion.
+        \begin{itemize}
+            \item Proposition 2.22 becomes Proposition 2.20 in the revised manuscript.
+        \end{itemize}
+        \item We keep propositions 2.24 and 2.25 because they are novel.
+        \begin{itemize}
+            \item Propositions 2.24 and 2.25 become Propositions 2.22 and 2.23, respectively, in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.26 because it underpins the greedy algorithm.
+        \begin{itemize}
+            \item Proposition 2.26 becomes Proposition 2.24 in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.27, 2.28, and 2.29 because they are novel. In addition, they are critical to our comparison of the convergence of OWNS-P and OWNS-R. In particular, they explain why OWNS-R may not yield a stable and accurate march, even when OWNS-P does, which is one of the contributions of this paper.
+        \begin{itemize}
+            \item Proposition 2.27, 2.28, and 2.29 become Propositions 2.25, 2.26, and 2.27 in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.30 because it underpins the greedy algorithm.
+        \begin{itemize}
+            \item Proposition 2.30 becomes Proposition 2.28 in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.31 because it is novel.
+        \begin{itemize}
+            \item Proposition 2.31 becomes Proposition 2.29 in the revised manuscript.
+        \end{itemize}
+        \item We keep proposition 2.33 because it is novel and important to our comparison of OWNS-P and OWNS-R.
+        \begin{itemize}
+            \item Proposition 2.33 becomes Proposition 2.31 in the revised manuscript.
+        \end{itemize}
+    \end{itemize}
+    }
+    
+    \item From a technical standpoint, the main question I have is if it is really necessary to solve the transverse eigenvalue problem so that the method exactly matches a fixed set of eigenvalues. This seems quite expensive. The natural approach to me would use some sort of rational Krylov method to construct operators which approximate well a cluster of eigenvalues, for example using algorithms implemented in Guettel's RKFIT package. I do not expect the authors to redo their work and implement a new method, but some discussion of how a less expensive method could (or could not) be used would be useful. At the very least, a fast updating procedure for the interpolated spectrum seems possible as the base flow changes and the possibility for this needs to be discussed (though not necessarily implemented.)
+    
+    \response{We compute the full spectrum only at a small subset of the streamwise stations, and we use a sparse eigenvalue solver to update the chosen recursion parameters (a small subset of the full eigenspectrum) at each station, as discussed in Algorithm 3.2. We also agree that it is likely that we could implement a method that does not need to solve for full eigenspectrum at any station. In our conclusion, we noted that the method only works because our linear system is relatively small, and that we would need to modify it for larger systems, which will be the subject of future work. We have expanded this discussion in Remark 3.3.}
+    
+    \item The role and choice of frequencies s is not discussed at all. The algorithm makes no sense without their specification. This needs to be explained up front.
+
+    \response{We have updated the manuscript to better explain the meaning of the variable $s$. In summary, we take a Laplace transform in time with Laplace variable $s=\eta+i\omega$. For most of the paper, we will set $\eta=0$ study the long-time stationary solution at a specified forcing frequency $\omega$. We only take $\eta\neq0$ to apply Briggs' criterion to distinguish between left- and right-going eigenvalues.}
+\end{enumerate}
+
+
+\subsection*{Minor comments}
+
+\begin{enumerate}
+    \item The definition 2.1 is not clearly written - first an eigenvalue for fixed s is mentioned, and suddenly one takes a limit. Of course the criterion is correct, but a more practical formulation which one would necessarily use is based on fixing eta large enough that the imaginary parts of the eigenvalues do not change sign for real s greater than eta - this simply relates eta to the lower order term C. Presumably in the algorithm the eigenvalues are only computed for eta fixed.
+
+    \response{Definition 2.1 follows the presentation used in previous work on OWNS (Towne and Colonius, 2015; Towne et al., 2022), as well as the original formulation by Briggs (1964). To maintain consistency with this literature, we prefer to modify Definition 2.1 only minimally. Nevertheless, we have revised the wording to make clearer that $s$ is not fixed and that the eigenvalue is a function of $s$.}
+    
+    \item It is unclear what is meant by exact in Section 2.3. Where is the boundary data coming from? An explanation is needed for what the authors are trying to prove. It seems that they are looking at special boundary data, or changing the actual boundary data somehow. I suppose this is the content of Proposition 2.9, but it needs to be clarified. The last sentence of the section attempts to motivate the discussion, but it needs to be expanded and put at the beginning of the section. Also, some hats appear to be missing in the formulas in Proposition 2.8.
+
+    \response{We have edited this section for clarity.}
+
+    
+    \item At the end of definition 2.10 it seems that the negative indices are missing in the reference to phi-hat.
+
+    \response{We have fixed this mistake.}
+    
+    \item Proposition 2.14 needs further explanation in relationship with Briggs criterion. It seems to contradict it if eta is chosen large enough. Again this confusion is rooted in the missing discussion of the choice of s. The same issue arises in Proposition 2.27.
+
+    \response{We have added comments to explain the meaning of $s$. We only take $\eta\neq0$ to apply Briggs' criterion. In Propositions 2.14 and 2.27, we use Briggs' criterion to label eigenvalues as either left- or right-going, and then we take $\eta=0$.}
+    
+    \item As stated Proposition 2.19 seems false - for example R = -I.
+
+    \response{We have modified this Proposition so that it is no longer false. It becomes Proposition 2.17 in the revised manuscript.}
+
+    
+    \item How are the speedups calculated to produce the data in Table 1?
+
+    \response{We compute the wall clock times for all calculations and normalize them by the wall clock time of the heuristic OWNS-P calculation at the given error level. This is why the heuristic OWNS-P calculation always has a speed-up of 1.0. We have added this explanation to the paper.}
+    
+\end{enumerate}
+
+\end{document}

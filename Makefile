@@ -5,6 +5,7 @@ pdf:
 	bibtex ex_article
 	pdflatex ex_article
 	pdflatex ex_article
+	pdflatex response
 
 clean:
 	rm -f *.bbl *.blg *.ps *.dvi *.aux *.toc \
