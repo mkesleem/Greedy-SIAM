@@ -295,8 +295,9 @@ precisely $N_+$ and $N_-$ right- and left-going eigenvalues, respectively.
 \begin{definition}[Briggs' criterion~\cite{Briggs_1964_Electron}]
     Consider a wave (eigenvector) with complex wave-number (eigenvalue)
     $i\alpha(s)$. For fixed $\omega$, this wave is right-going if
-    $\lim_{\eta\to\infty}\mathcal{I}[\alpha(s)]\to\infty$, while it is
-    left-going if $\lim_{\eta\to\infty}\mathcal{I}[\alpha(s)]\to-\infty$.
+    $\lim_{\eta\to\infty}\allowbreak\mathcal{I}[\alpha(s)]\to\infty$, while it
+    is left-going if
+    $\lim_{\eta\to\infty}\allowbreak\mathcal{I}[\alpha(s)]\to-\infty$.
     (Recall that $s=i\omega+\eta$.)
     \label{def:Briggs}
 \end{definition}
@@ -640,7 +641,9 @@ problem~\eqref{eq:subsetSelection}.
 
 \begin{remark}
 Proposition~\ref{prop:errOWNSP} shows that the error $\|P_{N_\beta}-P\|$ scales
-with $\|F_{++}\|\|F_{--}\|$ for small $\|F_{++}\|\|F_{--}\|$, while
+with
+\penalty 200
+$\|F_{++}\|\|F_{--}\|$ for small $\|F_{++}\|\|F_{--}\|$, while
 Proposition~\ref{prop:greedy-p} shows it is always possible to achieve zero
 error for any eigenvector by using its eigenvalue as a recursion parameter.
 \end{remark}
@@ -1738,7 +1741,9 @@ cases so that the full eigenspectrum of $M$ need not be computed.
 
 \section*{Acknowledgments}
 
-We acknowledge support from The Boeing Company through the Strategic Research
+We acknowledge support from The Boeing Company
+\linebreak
+through the Strategic Research
 and Development Relationship Agreement CT-BA-GTA-1, and by the Office of Naval
 Research through N00014-25-1-2072 and N00014-21-1-2158.
 

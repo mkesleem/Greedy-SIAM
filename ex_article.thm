@@ -27,12 +27,12 @@
 \contentsline {remark}{{Remark}{2.16}{}}{7}{theorem.68}%
 \contentsline {proposition}{{Proposition}{2.17}{}}{7}{theorem.69}%
 \contentsline {proof}{{Proof}{12}{}}{7}{proof.70}%
-\contentsline {remark}{{Remark}{2.18}{}}{7}{theorem.71}%
+\contentsline {remark}{{Remark}{2.18}{}}{8}{theorem.71}%
 \contentsline {definition}{{Definition}{2.19}{OWNS-R filter; Zhu and Towne~\cite {Zhu_2021_OWNS-R}}}{8}{theorem.73}%
 \contentsline {proposition}{{Proposition}{2.20}{Zhu and Towne~\cite {Zhu_2021_OWNS-R}}}{8}{theorem.78}%
 \contentsline {proof}{{Proof}{13}{}}{8}{proof.81}%
-\contentsline {remark}{{Remark}{2.21}{}}{8}{theorem.82}%
-\contentsline {proposition}{{Proposition}{2.22}{}}{8}{theorem.83}%
+\contentsline {remark}{{Remark}{2.21}{}}{9}{theorem.82}%
+\contentsline {proposition}{{Proposition}{2.22}{}}{9}{theorem.83}%
 \contentsline {proof}{{Proof}{14}{}}{9}{proof.84}%
 \contentsline {proposition}{{Proposition}{2.23}{}}{9}{theorem.85}%
 \contentsline {proof}{{Proof}{15}{}}{9}{proof.86}%
@@ -44,7 +44,7 @@
 \contentsline {proof}{{Proof}{18}{}}{9}{proof.95}%
 \contentsline {proposition}{{Proposition}{2.27}{}}{9}{theorem.96}%
 \contentsline {proof}{{Proof}{19}{}}{9}{proof.97}%
-\contentsline {proposition}{{Proposition}{2.28}{Zhu and Towne~\cite {Zhu_2021_OWNS-R}}}{9}{theorem.98}%
+\contentsline {proposition}{{Proposition}{2.28}{Zhu and Towne~\cite {Zhu_2021_OWNS-R}}}{10}{theorem.98}%
 \contentsline {proof}{{Proof}{20}{}}{10}{proof.100}%
 \contentsline {proposition}{{Proposition}{2.29}{}}{10}{theorem.101}%
 \contentsline {proof}{{Proof}{21}{}}{10}{proof.102}%
@@ -61,5 +61,5 @@
 \contentsline {remark}{{Remark}{5.2}{}}{16}{theorem.177}%
 \contentsline {proof}{{Proof}{23}{Proof of Proposition~\ref {prop:minimalOWNS-P}}}{22}{proof.189}%
 \contentsline {proposition}{{Proposition}{A.1}{}}{22}{theorem.190}%
-\contentsline {proof}{{Proof}{24}{}}{22}{proof.192}%
+\contentsline {proof}{{Proof}{24}{}}{23}{proof.192}%
 \contentsline {proof}{{Proof}{25}{Proof of Proposition~\ref {prop:errOWNSP}}}{23}{proof.199}%
